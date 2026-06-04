@@ -2,7 +2,7 @@ import '@/global.css';
 
 import { Platform } from 'react-native';
 
-export const Palette = {
+export const Colors = {
   WHITE: '#FFFFFF',
 
   GRAY_50: '#f9fafb',
@@ -33,24 +33,7 @@ export const Palette = {
   RED_900: '#7f1d1d',
 } as const;
 
-export const Colors = {
-  light: {
-    text: Palette.GRAY_950,
-    background: Palette.WHITE,
-    backgroundElement: Palette.GRAY_100,
-    backgroundSelected: Palette.GRAY_200,
-    textSecondary: Palette.GRAY_500,
-  },
-  dark: {
-    text: Palette.WHITE,
-    background: Palette.GRAY_950,
-    backgroundElement: Palette.GRAY_800,
-    backgroundSelected: Palette.GRAY_700,
-    textSecondary: Palette.GRAY_400,
-  },
-} as const;
-
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+export type ThemeColor = keyof typeof Colors;
 
 export const FontSize = {
   xs: 12,
