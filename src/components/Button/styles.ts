@@ -32,6 +32,9 @@ export const styles = StyleSheet.create({
   labelSecondary: {
     color: Colors.WHITE,
   },
+  labelNormalCase: {
+    textTransform: 'none',
+  },
 });
 
 export function getButtonStyles(color: ButtonColorStyle = 'PRIMARY') {

@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native';
 
-export default function SignIn() {
+export default function Register() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Sign in</Text>
+      <Text>Register</Text>
     </View>
   );
 }
