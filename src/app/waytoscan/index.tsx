@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 
 import { styles } from './styles';
 
-export default function Home() {
+export default function WayToScan() {
   const router = useRouter();
 
   return (
@@ -30,17 +30,14 @@ export default function Home() {
         </View>
       </View>
 
-      <View style={styles.footer}>
-        <Button
-          title="Sign in"
-          uppercase={false}
-          style={{ marginTop: 0 }}
-          onPress={() => router.push('/signin')}
-        />
-        <Button title="Register" uppercase={false} onPress={() => router.push('/register')} />
+      <View style={styles.actions}>
+        <Button title="QR-Code" uppercase={false} style={styles.actionButton} />
+        <Button title="Enter with keyboard" uppercase={false} />
+      </View>
 
-        <Pressable onPress={() => router.push('/waytoscan')}>
-          <Text style={styles.link}>Continue without Registration</Text>
+      <View style={styles.footer}>
+        <Pressable onPress={() => router.back()}>
+          <Text style={styles.backLink}>Back</Text>
         </Pressable>
       </View>
     </SafeAreaView>
