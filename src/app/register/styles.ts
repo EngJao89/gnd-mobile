@@ -60,6 +60,15 @@ export const styles = StyleSheet.create({
     paddingVertical: Spacing.three,
     fontSize: FontSize.base,
     color: Colors.GRAY_900,
+    marginBottom: Spacing.one,
+  },
+  inputError: {
+    borderWidth: 1,
+    borderColor: Colors.RED_600,
+  },
+  error: {
+    color: Colors.WHITE,
+    fontSize: FontSize.sm,
     marginBottom: Spacing.two,
   },
   registerButton: {
