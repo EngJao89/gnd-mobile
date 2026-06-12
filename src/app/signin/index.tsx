@@ -1,6 +1,9 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -14,14 +17,36 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
+import { api } from '@/lib/axios';
 
+import { type SignInFormData, signInSchema } from './schema';
 import { styles } from './styles';
 
 export default function SignIn() {
   const router = useRouter();
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      phone: '',
+      password: '',
+    },
+  });
+
+  async function onSubmit(data: SignInFormData) {
+    try {
+      await api.post('/auth/login', data);
+      Alert.alert('Success', 'Logged in successfully.');
+      router.replace('/');
+    } catch {
+      Alert.alert('Error', 'Invalid phone number or password.');
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,24 +75,40 @@ export default function SignIn() {
 
           <View style={styles.form}>
             <Text style={styles.label}>Phone number</Text>
-            <TextInput
-              style={styles.input}
-              value={phone}
-              onChangeText={setPhone}
-              keyboardType="phone-pad"
-              autoComplete="tel"
-              placeholderTextColor={Colors.GRAY_400}
+            <Controller
+              control={control}
+              name="phone"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={[styles.input, errors.phone && styles.inputError]}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  keyboardType="phone-pad"
+                  autoComplete="tel"
+                  placeholderTextColor={Colors.GRAY_400}
+                />
+              )}
             />
+            {errors.phone ? <Text style={styles.error}>{errors.phone.message}</Text> : null}
 
             <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              autoComplete="password"
-              placeholderTextColor={Colors.GRAY_400}
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={[styles.input, errors.password && styles.inputError]}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  secureTextEntry
+                  autoComplete="password"
+                  placeholderTextColor={Colors.GRAY_400}
+                />
+              )}
             />
+            {errors.password ? <Text style={styles.error}>{errors.password.message}</Text> : null}
 
             <View style={styles.rememberRow}>
               <Text style={styles.rememberLabel}>Remember me</Text>
@@ -76,7 +117,13 @@ export default function SignIn() {
               </Pressable>
             </View>
 
-            <Button title="Log in" uppercase={false} style={styles.loginButton} />
+            <Button
+              title={isSubmitting ? 'Logging in...' : 'Log in'}
+              uppercase={false}
+              style={styles.loginButton}
+              disabled={isSubmitting}
+              onPress={handleSubmit(onSubmit)}
+            />
           </View>
 
           <View style={styles.footer}>
