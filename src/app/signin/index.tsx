@@ -33,7 +33,7 @@ export default function SignIn() {
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      phone: '',
+      email: '',
       password: '',
     },
   });
@@ -44,7 +44,7 @@ export default function SignIn() {
       Alert.alert('Success', 'Logged in successfully.');
       router.replace('/');
     } catch {
-      Alert.alert('Error', 'Invalid phone number or password.');
+      Alert.alert('Error', 'Invalid email or password.');
     }
   }
 
@@ -74,23 +74,24 @@ export default function SignIn() {
           </View>
 
           <View style={styles.form}>
-            <Text style={styles.label}>Phone number</Text>
+            <Text style={styles.label}>Email</Text>
             <Controller
               control={control}
-              name="phone"
+              name="email"
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  style={[styles.input, errors.phone && styles.inputError]}
+                  style={[styles.input, errors.email && styles.inputError]}
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  keyboardType="phone-pad"
-                  autoComplete="tel"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoComplete="email"
                   placeholderTextColor={Colors.GRAY_400}
                 />
               )}
             />
-            {errors.phone ? <Text style={styles.error}>{errors.phone.message}</Text> : null}
+            {errors.email ? <Text style={styles.error}>{errors.email.message}</Text> : null}
 
             <Text style={styles.label}>Password</Text>
             <Controller
