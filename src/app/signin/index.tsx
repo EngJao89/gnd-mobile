@@ -42,7 +42,7 @@ export default function SignIn() {
     try {
       await api.post('/auth/login', data);
       Alert.alert('Success', 'Logged in successfully.');
-      router.replace('/');
+      router.replace('/list');
     } catch {
       Alert.alert('Error', 'Invalid email or password.');
     }
