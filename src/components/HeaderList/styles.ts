@@ -4,40 +4,43 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.GREEN_700,
-    paddingTop: 72,
-    paddingLeft: Spacing.one,
-    paddingRight: Spacing.three,
-    paddingBottom: Spacing.four,
+    paddingHorizontal: Spacing.three,
+    paddingBottom: Spacing.three,
     zIndex: 10,
   },
-  headerContent: {
+  topRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
-  imageContent: {
+  logoContainer: {
+    width: 48,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 40,
+    height: 40,
+  },
+  locationContainer: {
     flex: 1,
-  },
-  maps: {
-    flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 104,
+    justifyContent: 'center',
+    paddingHorizontal: Spacing.two,
   },
   location: {
     color: Colors.WHITE,
     fontSize: FontSize.sm,
     fontWeight: '400',
-    marginLeft: Spacing.one,
+    textAlign: 'center',
   },
-  image: {
-    width: '50%',
+  actionContainer: {
+    minWidth: 48,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   userContent: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 12,
-    marginBottom: 12,
+    paddingTop: Spacing.two,
   },
   userLabel: {
     color: Colors.WHITE,

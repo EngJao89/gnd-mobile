@@ -1,5 +1,8 @@
 import { type ReactNode } from 'react';
 import { Image, Text, View, type ImageSourcePropType } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Spacing } from '@/constants/theme';
 
 import { styles } from './styles';
 
@@ -11,17 +14,20 @@ type HeaderListProps = {
 };
 
 export default function HeaderList({ location, userName, logoSource, button }: HeaderListProps) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContent}>
-        <View style={styles.imageContent}>
-          {logoSource ? <Image source={logoSource} style={styles.image} resizeMode="contain" /> : null}
+    <View style={[styles.container, { paddingTop: insets.top + Spacing.two }]}>
+      <View style={styles.topRow}>
+        <View style={styles.logoContainer}>
+          {logoSource ? <Image source={logoSource} style={styles.logo} resizeMode="contain" /> : null}
         </View>
 
-        <View style={styles.maps}>
+        <View style={styles.locationContainer}>
           {location ? <Text style={styles.location}>{location}</Text> : null}
-          {button ? <View>{button}</View> : null}
         </View>
+
+        <View style={styles.actionContainer}>{button}</View>
       </View>
 
       {userName ? (
