@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { getApiBaseUrl } from '@/lib/axios';
+import { formatPrice } from '@/lib/format-price';
 import type { Product } from '@/types/product';
 
 import { styles } from './styles';
@@ -9,16 +10,6 @@ import { styles } from './styles';
 type ProductItemProps = {
   product: Product;
 };
-
-function formatPrice(price: string) {
-  const value = Number(price);
-
-  if (Number.isNaN(value)) {
-    return price;
-  }
-
-  return `$${value.toFixed(value % 1 === 0 ? 0 : 2)}`;
-}
 
 export default function ProductItem({ product }: ProductItemProps) {
   const [quantity, setQuantity] = useState(0);

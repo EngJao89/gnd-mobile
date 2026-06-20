@@ -98,7 +98,11 @@ export default function List() {
           ]}
           data={filteredProducts}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <ProductItem product={item} />}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => router.push(`/products/${item.id}`)}>
+              <ProductItem product={item} />
+            </Pressable>
+          )}
           onRefresh={loadProducts}
           refreshing={loading && products.length > 0}
           ListEmptyComponent={
