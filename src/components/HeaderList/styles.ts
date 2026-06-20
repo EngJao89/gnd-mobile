@@ -4,22 +4,23 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.GREEN_700,
-    paddingHorizontal: Spacing.three,
+    paddingHorizontal: Spacing.four,
     paddingBottom: Spacing.three,
     zIndex: 10,
   },
   topRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 44,
   },
   logoContainer: {
-    width: 48,
+    width: 44,
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
   logo: {
-    width: 40,
-    height: 40,
+    width: 36,
+    height: 36,
   },
   locationContainer: {
     flex: 1,
@@ -34,7 +35,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   actionContainer: {
-    minWidth: 48,
+    width: 44,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
