@@ -1,20 +1,21 @@
-import { type ReactNode } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './styles';
 
 type CartEmptyProps = {
-  title: string;
-  label: string;
-  value: string;
-  icon?: ReactNode;
+  title?: string;
+  label?: string;
+  value?: string;
 };
 
-export default function CartEmpty({ title, label, value, icon }: CartEmptyProps) {
+export default function CartEmpty({
+  title = 'Your cart is empty',
+  label = 'Total:',
+  value = '$0',
+}: CartEmptyProps) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {icon}
         <Text style={styles.title}>{title}</Text>
       </View>
 
