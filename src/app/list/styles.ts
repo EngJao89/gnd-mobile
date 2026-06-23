@@ -55,16 +55,4 @@ export const styles = StyleSheet.create({
     fontSize: FontSize.base,
     textDecorationLine: 'underline',
   },
-  cartButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: Colors.WHITE,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cartIcon: {
-    fontSize: FontSize.base,
-  },
 });
