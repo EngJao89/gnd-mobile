@@ -1,7 +1,8 @@
+import { Image } from 'expo-image';
 import { useState } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
-import { getApiBaseUrl } from '@/lib/axios';
+import { getProductImageUrl } from '@/lib/get-product-image-url';
 import { formatPrice } from '@/lib/format-price';
 import type { Product } from '@/types/product';
 
@@ -13,12 +14,22 @@ type ProductItemProps = {
 
 export default function ProductItem({ product }: ProductItemProps) {
   const [quantity, setQuantity] = useState(0);
-  const imageUri = `${getApiBaseUrl()}${product.imageUrl}`;
+  const [imageError, setImageError] = useState(false);
+  const imageUri = getProductImageUrl(product.imageUrl);
 
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        <Image source={{ uri: imageUri }} style={styles.image} resizeMode="contain" />
+        {imageError ? (
+          <Text style={styles.imageFallback}>No image</Text>
+        ) : (
+          <Image
+            source={{ uri: imageUri }}
+            style={styles.image}
+            contentFit="contain"
+            onError={() => setImageError(true)}
+          />
+        )}
       </View>
 
       <View style={styles.info}>

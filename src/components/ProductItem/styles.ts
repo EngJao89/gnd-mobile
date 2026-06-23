@@ -27,6 +27,11 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  imageFallback: {
+    fontSize: FontSize.xs,
+    color: Colors.GRAY_400,
+    textAlign: 'center',
+  },
   info: {
     flex: 1,
     marginLeft: Spacing.three,
