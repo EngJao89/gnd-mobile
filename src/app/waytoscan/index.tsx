@@ -37,7 +37,11 @@ export default function WayToScan() {
           style={styles.actionButton}
           onPress={() => router.push('/barcode')}
         />
-        <Button title="Enter with keyboard" uppercase={false} />
+        <Button
+          title="Enter with keyboard"
+          uppercase={false}
+          onPress={() => router.push('/enter-keyboard')}
+        />
       </View>
 
       <View style={styles.footer}>
