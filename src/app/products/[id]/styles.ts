@@ -38,6 +38,11 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  imageFallback: {
+    fontSize: FontSize.sm,
+    color: Colors.GRAY_400,
+    textAlign: 'center',
+  },
   name: {
     fontSize: FontSize.xl,
     fontWeight: 'bold',

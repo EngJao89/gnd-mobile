@@ -1,8 +1,8 @@
+import { Image } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  Image,
   Pressable,
   ScrollView,
   Text,
@@ -11,9 +11,11 @@ import {
 
 import Button from '@/components/Button';
 import HeaderList from '@/components/HeaderList';
+import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
 import { formatPrice } from '@/lib/format-price';
-import { api, getApiBaseUrl } from '@/lib/axios';
+import { api } from '@/lib/axios';
+import { getProductImageUrl } from '@/lib/get-product-image-url';
 import type { Product } from '@/types/product';
 
 import { styles } from './styles';
@@ -25,6 +27,7 @@ export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [imageError, setImageError] = useState(false);
 
   const loadProduct = useCallback(async () => {
     if (!id) {
@@ -38,6 +41,7 @@ export default function ProductDetails() {
       setError(null);
       const { data } = await api.get<Product>(`/products/${id}`);
       setProduct(data);
+      setImageError(false);
     } catch {
       setError('Could not load product details.');
       setProduct(null);
@@ -54,7 +58,7 @@ export default function ProductDetails() {
     <View style={styles.container}>
       <HeaderList
         location="São Paulo, SP"
-        logoSource={require('@/assets/images/header-logo.png')}
+        logoSource={images.headerLogo}
         button={
           <View style={styles.cartButton}>
             <Text style={styles.cartIcon}>🛒</Text>
@@ -79,11 +83,16 @@ export default function ProductDetails() {
       ) : (
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.imageWrapper}>
-            <Image
-              source={{ uri: `${getApiBaseUrl()}${product.imageUrl}` }}
-              style={styles.image}
-              resizeMode="contain"
-            />
+            {imageError ? (
+              <Text style={styles.imageFallback}>No image</Text>
+            ) : (
+              <Image
+                source={{ uri: getProductImageUrl(product.imageUrl) }}
+                style={styles.image}
+                contentFit="contain"
+                onError={() => setImageError(true)}
+              />
+            )}
           </View>
 
           <Text style={styles.name}>{product.name}</Text>
