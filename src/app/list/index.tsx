@@ -74,7 +74,12 @@ export default function List() {
           placeholderTextColor={Colors.GRAY_400}
         />
 
-        <Button title="Scan with barcode" uppercase={false} style={styles.scanButton} />
+        <Button
+          title="Scan with barcode"
+          uppercase={false}
+          style={styles.scanButton}
+          onPress={() => router.push('/barcode')}
+        />
       </View>
 
       {loading && products.length === 0 ? (

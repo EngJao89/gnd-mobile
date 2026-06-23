@@ -31,7 +31,12 @@ export default function WayToScan() {
       </View>
 
       <View style={styles.actions}>
-        <Button title="QR-Code" uppercase={false} style={styles.actionButton} />
+        <Button
+          title="QR-Code"
+          uppercase={false}
+          style={styles.actionButton}
+          onPress={() => router.push('/barcode')}
+        />
         <Button title="Enter with keyboard" uppercase={false} />
       </View>
 
