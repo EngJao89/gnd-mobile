@@ -42,7 +42,16 @@ export default function Home() {
           uppercase={false}
           onPress={() => router.push('/signin-store')}
         />
-        <Button title="Register" uppercase={false} onPress={() => router.push('/register')} />
+        <Button
+          title="Register User"
+          uppercase={false}
+          onPress={() => router.push('/register')}
+        />
+        <Button
+          title="Register Store"
+          uppercase={false}
+          onPress={() => router.push('/register-store')}
+        />
 
         <Pressable onPress={() => router.push('/waytoscan')}>
           <Text style={styles.link}>Continue without Registration</Text>
