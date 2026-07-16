@@ -41,8 +41,9 @@ export default function SignInStore() {
   async function onSubmit(data: SignInStoreFormData) {
     try {
       await api.post('/store-auth/login', data);
-      Alert.alert('Success', 'Logged in successfully.');
-      router.replace('/list');
+      Alert.alert('Welcome!', 'Glad to have you back.', [
+        { text: 'OK', onPress: () => router.replace('/list') },
+      ]);
     } catch {
       Alert.alert('Error', 'Invalid email or password.');
     }
