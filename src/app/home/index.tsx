@@ -32,10 +32,15 @@ export default function Home() {
 
       <View style={styles.footer}>
         <Button
-          title="Sign in"
+          title="Sign In User"
           uppercase={false}
           style={{ marginTop: 0 }}
           onPress={() => router.push('/signin')}
+        />
+        <Button
+          title="Sign in Store"
+          uppercase={false}
+          onPress={() => router.push('/signin-store')}
         />
         <Button title="Register" uppercase={false} onPress={() => router.push('/register')} />
 
