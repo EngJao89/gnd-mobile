@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
 import CartEmpty from '@/components/CartEmpty';
-import CartHeaderButton from '@/components/CartHeaderButton';
+import HeaderActions from '@/components/HeaderActions';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 
@@ -16,7 +16,7 @@ export default function Cart() {
       <HeaderList
         location="Belmore, Sydney"
         logoSource={images.headerLogo}
-        button={<CartHeaderButton />}
+        button={<HeaderActions />}
       />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
