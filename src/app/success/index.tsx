@@ -2,8 +2,8 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 
+import HeaderActions from '@/components/HeaderActions';
 import HeaderList from '@/components/HeaderList';
-import CartHeaderButton from '@/components/CartHeaderButton';
 import { images } from '@/constants/images';
 
 import { styles } from './styles';
@@ -16,7 +16,7 @@ export default function Success() {
       <HeaderList
         location="Belmore, Sydney"
         logoSource={images.headerLogo}
-        button={<CartHeaderButton />}
+        button={<HeaderActions />}
       />
 
       <View style={styles.content}>

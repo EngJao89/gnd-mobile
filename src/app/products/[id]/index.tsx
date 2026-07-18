@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import Button from '@/components/Button';
-import CartHeaderButton from '@/components/CartHeaderButton';
+import HeaderActions from '@/components/HeaderActions';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
@@ -60,7 +60,7 @@ export default function ProductDetails() {
       <HeaderList
         location="São Paulo, SP"
         logoSource={images.headerLogo}
-        button={<CartHeaderButton />}
+        button={<HeaderActions />}
       />
 
       {loading ? (

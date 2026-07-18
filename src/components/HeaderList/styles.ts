@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   actionContainer: {
-    width: 44,
+    minWidth: 44,
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
