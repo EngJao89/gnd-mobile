@@ -3,11 +3,13 @@ import { Image, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
+import { useAuth } from '@/contexts/auth';
 
 import { styles } from './styles';
 
 export default function Home() {
   const router = useRouter();
+  const { setRole } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,7 +55,11 @@ export default function Home() {
           onPress={() => router.push('/register-store')}
         />
 
-        <Pressable onPress={() => router.push('/waytoscan')}>
+        <Pressable
+          onPress={() => {
+            setRole(null);
+            router.push('/waytoscan');
+          }}>
           <Text style={styles.link}>Continue without Registration</Text>
         </Pressable>
       </View>

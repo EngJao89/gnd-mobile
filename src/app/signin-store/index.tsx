@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
+import { useAuth } from '@/contexts/auth';
 import { api } from '@/lib/axios';
 
 import { type SignInStoreFormData, signInStoreSchema } from './schema';
@@ -24,6 +25,7 @@ import { styles } from './styles';
 
 export default function SignInStore() {
   const router = useRouter();
+  const { setRole } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
 
   const {
@@ -41,6 +43,7 @@ export default function SignInStore() {
   async function onSubmit(data: SignInStoreFormData) {
     try {
       await api.post('/store-auth/login', data);
+      setRole('store');
       Alert.alert('Welcome!', 'Glad to have you back.', [
         { text: 'OK', onPress: () => router.replace('/list') },
       ]);
