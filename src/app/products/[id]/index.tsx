@@ -14,6 +14,7 @@ import HeaderActions from '@/components/HeaderActions';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
+import { useAuth } from '@/contexts/auth';
 import { formatPrice } from '@/lib/format-price';
 import { api } from '@/lib/axios';
 import { getProductImageUrl } from '@/lib/get-product-image-url';
@@ -23,6 +24,7 @@ import { styles } from './styles';
 
 export default function ProductDetails() {
   const router = useRouter();
+  const { isUser } = useAuth();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -120,7 +122,9 @@ export default function ProductDetails() {
             </Pressable>
           </View>
 
-          <Button title="Add to cart" uppercase={false} style={styles.addButton} />
+          {isUser ? (
+            <Button title="Add to cart" uppercase={false} style={styles.addButton} />
+          ) : null}
 
           <View style={styles.footer}>
             <Pressable onPress={() => router.back()}>

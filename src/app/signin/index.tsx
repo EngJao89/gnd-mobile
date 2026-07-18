@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
+import { useAuth } from '@/contexts/auth';
 import { api } from '@/lib/axios';
 
 import { type SignInFormData, signInSchema } from './schema';
@@ -24,6 +25,7 @@ import { styles } from './styles';
 
 export default function SignIn() {
   const router = useRouter();
+  const { setRole } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
 
   const {
@@ -41,6 +43,7 @@ export default function SignIn() {
   async function onSubmit(data: SignInFormData) {
     try {
       await api.post('/auth/login', data);
+      setRole('user');
       Alert.alert('Success', 'Logged in successfully.');
       router.replace('/list');
     } catch {
