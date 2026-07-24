@@ -10,8 +10,6 @@ import { styles } from './styles';
 const storeProfile = {
   name: 'Mercado Serve Mais',
   legalName: 'Serve Mais Varejo LTDA',
-  cnpj: '87.778.686/0001-24',
-  ownerName: 'Carlos Matheus',
   email: 'serve-mais@gmail.com',
   street: 'AV. Araguaia',
   numberOrBlock: '125',
@@ -48,16 +46,6 @@ export default function StoreProfile() {
           <View style={styles.field}>
             <Text style={styles.label}>Legal name</Text>
             <Text style={styles.value}>{storeProfile.legalName}</Text>
-          </View>
-
-          <View style={styles.field}>
-            <Text style={styles.label}>CNPJ</Text>
-            <Text style={styles.value}>{storeProfile.cnpj}</Text>
-          </View>
-
-          <View style={styles.field}>
-            <Text style={styles.label}>Owner</Text>
-            <Text style={styles.value}>{storeProfile.ownerName}</Text>
           </View>
 
           <View style={styles.field}>
