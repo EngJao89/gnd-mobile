@@ -8,13 +8,13 @@ import { useAuth } from '@/contexts/auth';
 import { styles } from './styles';
 
 export default function HeaderActions() {
-  const { isUser } = useAuth();
+  const { isUser, isStore } = useAuth();
 
   return (
     <View style={styles.container}>
       <ProfileHeaderButton />
       <CartHeaderButton />
-      {isUser ? <LogoutHeaderButton /> : null}
+      {isUser || isStore ? <LogoutHeaderButton /> : null}
     </View>
   );
 }
