@@ -9,7 +9,7 @@ import { styles } from './styles';
 
 export default function Home() {
   const router = useRouter();
-  const { setRole } = useAuth();
+  const { signOut } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,8 +56,8 @@ export default function Home() {
         />
 
         <Pressable
-          onPress={() => {
-            setRole(null);
+          onPress={async () => {
+            await signOut();
             router.push('/waytoscan');
           }}>
           <Text style={styles.link}>Continue without Registration</Text>
