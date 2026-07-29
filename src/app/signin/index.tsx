@@ -25,7 +25,7 @@ import { styles } from './styles';
 
 export default function SignIn() {
   const router = useRouter();
-  const { setRole } = useAuth();
+  const { signInUser } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
 
   const {
@@ -42,8 +42,12 @@ export default function SignIn() {
 
   async function onSubmit(data: SignInFormData) {
     try {
-      await api.post('/auth/login', data);
-      setRole('user');
+      const { data: tokens } = await api.post<{
+        accessToken: string;
+        refreshToken: string;
+      }>('/auth/login', data);
+
+      await signInUser(tokens, rememberMe);
       Alert.alert('Success', 'Logged in successfully.');
       router.replace('/list');
     } catch {
