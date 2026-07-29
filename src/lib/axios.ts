@@ -2,11 +2,13 @@ import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { Platform } from 'react-native';
 
 import {
-  clearStoreTokens,
-  getStoreAccessToken,
-  getStoreRefreshToken,
-  saveStoreTokens,
-  type StoreTokens,
+  clearTokens,
+  getAccessToken,
+  getRefreshToken,
+  getTokenOwner,
+  saveTokens,
+  type AuthTokens,
+  type TokenOwner,
 } from '@/lib/token-storage';
 
 type RetriableRequestConfig = InternalAxiosRequestConfig & {
@@ -21,6 +23,13 @@ let refreshQueue: Array<{
   resolve: (token: string) => void;
   reject: (error: unknown) => void;
 }> = [];
+
+const AUTH_PATHS = [
+  '/auth/login',
+  '/auth/refresh',
+  '/store-auth/login',
+  '/store-auth/refresh',
+];
 
 export function getApiBaseUrl() {
   if (process.env.EXPO_PUBLIC_API_URL) {
@@ -60,8 +69,12 @@ function processRefreshQueue(error: unknown, token: string | null) {
   refreshQueue = [];
 }
 
-function isStoreAuthPath(url?: string) {
-  return Boolean(url?.includes('/store-auth/login') || url?.includes('/store-auth/refresh'));
+function isAuthPath(url?: string) {
+  return Boolean(url && AUTH_PATHS.some((path) => url.includes(path)));
+}
+
+function getRefreshEndpoint(owner: TokenOwner) {
+  return owner === 'store' ? '/store-auth/refresh' : '/auth/refresh';
 }
 
 export const api = axios.create({
@@ -79,9 +92,9 @@ const refreshClient = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const accessToken = getStoreAccessToken();
+  const accessToken = getAccessToken();
 
-  if (accessToken && !isStoreAuthPath(config.url)) {
+  if (accessToken && !isAuthPath(config.url)) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
@@ -97,15 +110,16 @@ api.interceptors.response.use(
       !originalRequest ||
       error.response?.status !== 401 ||
       originalRequest._retry ||
-      isStoreAuthPath(originalRequest.url)
+      isAuthPath(originalRequest.url)
     ) {
       return Promise.reject(error);
     }
 
-    const refreshToken = getStoreRefreshToken();
+    const refreshToken = getRefreshToken();
+    const owner = getTokenOwner();
 
-    if (!refreshToken) {
-      await clearStoreTokens();
+    if (!refreshToken || !owner) {
+      await clearTokens();
       notifyAuthFailure();
       return Promise.reject(error);
     }
@@ -123,18 +137,18 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { data } = await refreshClient.post<StoreTokens>('/store-auth/refresh', {
+      const { data } = await refreshClient.post<AuthTokens>(getRefreshEndpoint(owner), {
         refreshToken,
       });
 
-      await saveStoreTokens(data);
+      await saveTokens(owner, data);
       processRefreshQueue(null, data.accessToken);
 
       originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
       return api(originalRequest);
     } catch (refreshError) {
       processRefreshQueue(refreshError, null);
-      await clearStoreTokens();
+      await clearTokens();
       notifyAuthFailure();
       return Promise.reject(refreshError);
     } finally {

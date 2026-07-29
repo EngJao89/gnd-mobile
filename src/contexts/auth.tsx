@@ -10,10 +10,10 @@ import {
 
 import { onAuthFailure } from '@/lib/axios';
 import {
-  clearStoreTokens,
-  loadPersistedStoreTokens,
-  saveStoreTokens,
-  type StoreTokens,
+  clearTokens,
+  loadPersistedTokens,
+  saveTokens,
+  type AuthTokens,
 } from '@/lib/token-storage';
 
 export type AuthRole = 'user' | 'store' | null;
@@ -22,7 +22,8 @@ type AuthContextValue = {
   role: AuthRole;
   isReady: boolean;
   setRole: (role: AuthRole) => void;
-  signInStore: (tokens: StoreTokens, rememberMe?: boolean) => Promise<void>;
+  signInUser: (tokens: AuthTokens, rememberMe?: boolean) => Promise<void>;
+  signInStore: (tokens: AuthTokens, rememberMe?: boolean) => Promise<void>;
   signOut: () => Promise<void>;
   isUser: boolean;
   isStore: boolean;
@@ -35,12 +36,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
 
   const signOut = useCallback(async () => {
-    await clearStoreTokens();
+    await clearTokens();
     setRole(null);
   }, []);
 
-  const signInStore = useCallback(async (tokens: StoreTokens, rememberMe = false) => {
-    await saveStoreTokens(tokens, rememberMe);
+  const signInUser = useCallback(async (tokens: AuthTokens, rememberMe = false) => {
+    await saveTokens('user', tokens, rememberMe);
+    setRole('user');
+  }, []);
+
+  const signInStore = useCallback(async (tokens: AuthTokens, rememberMe = false) => {
+    await saveTokens('store', tokens, rememberMe);
     setRole('store');
   }, []);
 
@@ -49,10 +55,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function restoreSession() {
       try {
-        const tokens = await loadPersistedStoreTokens();
+        const session = await loadPersistedTokens();
 
-        if (isMounted && tokens) {
-          setRole('store');
+        if (isMounted && session) {
+          setRole(session.owner);
         }
       } finally {
         if (isMounted) {
@@ -79,12 +85,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       role,
       isReady,
       setRole,
+      signInUser,
       signInStore,
       signOut,
       isUser: role === 'user',
       isStore: role === 'store',
     }),
-    [role, isReady, signInStore, signOut],
+    [role, isReady, signInUser, signInStore, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
