@@ -25,7 +25,7 @@ import { styles } from './styles';
 
 export default function SignInStore() {
   const router = useRouter();
-  const { setRole } = useAuth();
+  const { signInStore } = useAuth();
   const [rememberMe, setRememberMe] = useState(false);
 
   const {
@@ -42,8 +42,12 @@ export default function SignInStore() {
 
   async function onSubmit(data: SignInStoreFormData) {
     try {
-      await api.post('/store-auth/login', data);
-      setRole('store');
+      const { data: tokens } = await api.post<{
+        accessToken: string;
+        refreshToken: string;
+      }>('/store-auth/login', data);
+
+      await signInStore(tokens, rememberMe);
       Alert.alert('Welcome!', 'Glad to have you back.', [
         { text: 'OK', onPress: () => router.replace('/list') },
       ]);
