@@ -1,3 +1,5 @@
+import i18n from '@/i18n';
+
 export function formatPrice(price: string) {
   const value = Number(price);
 
@@ -5,5 +7,10 @@ export function formatPrice(price: string) {
     return price;
   }
 
-  return `$${value.toFixed(value % 1 === 0 ? 0 : 2)}`;
+  const locale = i18n.language.startsWith('en') ? 'en-US' : 'pt-BR';
+
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(value);
 }

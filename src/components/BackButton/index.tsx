@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { type ReactNode } from 'react';
 import { Pressable, Text, type PressableProps, type ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { type BackButtonColorStyle, getBackButtonStyles } from './styles';
 
@@ -12,7 +13,7 @@ type BackButtonProps = Omit<PressableProps, 'style' | 'children'> & {
 };
 
 export default function BackButton({
-  title = 'Voltar',
+  title,
   color = 'PRIMARY',
   icon,
   style,
@@ -20,6 +21,7 @@ export default function BackButton({
   ...rest
 }: BackButtonProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const buttonStyles = getBackButtonStyles(color);
 
   return (
@@ -27,7 +29,7 @@ export default function BackButton({
       style={[...buttonStyles.container, style]}
       onPress={onPress ?? (() => router.back())}
       {...rest}>
-      <Text style={buttonStyles.label}>{title}</Text>
+      <Text style={buttonStyles.label}>{title ?? t('common.back')}</Text>
       {icon}
     </Pressable>
   );

@@ -1,9 +1,10 @@
 import { Image } from 'expo-image';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
-import { getProductImageUrl } from '@/lib/get-product-image-url';
 import { formatPrice } from '@/lib/format-price';
+import { getProductImageUrl } from '@/lib/get-product-image-url';
 import type { Product } from '@/types/product';
 
 import { styles } from './styles';
@@ -13,6 +14,7 @@ type ProductItemProps = {
 };
 
 export default function ProductItem({ product }: ProductItemProps) {
+  const { t } = useTranslation();
   const [quantity, setQuantity] = useState(0);
   const [imageError, setImageError] = useState(false);
   const imageUri = getProductImageUrl(product.imageUrl);
@@ -21,7 +23,7 @@ export default function ProductItem({ product }: ProductItemProps) {
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
         {imageError ? (
-          <Text style={styles.imageFallback}>No image</Text>
+          <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
         ) : (
           <Image
             source={{ uri: imageUri }}

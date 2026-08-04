@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
+import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   Alert,
   Image,
@@ -18,11 +20,13 @@ import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
 import { api } from '@/lib/axios';
 
-import { type RegisterFormData, registerSchema } from './schema';
+import { createRegisterSchema, type RegisterFormData } from './schema';
 import { styles } from './styles';
 
 export default function Register() {
   const router = useRouter();
+  const { t } = useTranslation();
+  const registerSchema = useMemo(() => createRegisterSchema(t), [t]);
 
   const {
     control,
@@ -41,10 +45,10 @@ export default function Register() {
   async function onSubmit(data: RegisterFormData) {
     try {
       await api.post('/users', data);
-      Alert.alert('Success', 'Account created successfully.');
+      Alert.alert(t('common.success'), t('register.successMessage'));
       router.replace('/signin');
     } catch {
-      Alert.alert('Error', 'Could not create account. Please try again.');
+      Alert.alert(t('common.error'), t('register.errorMessage'));
     }
   }
 
@@ -56,12 +60,12 @@ export default function Register() {
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <View style={styles.brandSection}>
             <View style={styles.brandContent}>
-              <Text style={styles.title}>Groceries</Text>
+              <Text style={styles.title}>{t('brand.groceries')}</Text>
 
               <View style={styles.brandRow}>
                 <View style={styles.brandText}>
-                  <Text style={styles.subtitle}>Next</Text>
-                  <Text style={styles.subtitle}>Door</Text>
+                  <Text style={styles.subtitle}>{t('brand.next')}</Text>
+                  <Text style={styles.subtitle}>{t('brand.door')}</Text>
                 </View>
 
                 <Image
@@ -74,7 +78,7 @@ export default function Register() {
           </View>
 
           <View style={styles.form}>
-            <Text style={styles.label}>First Name</Text>
+            <Text style={styles.label}>{t('register.firstName')}</Text>
             <Controller
               control={control}
               name="firstName"
@@ -91,7 +95,7 @@ export default function Register() {
             />
             {errors.firstName ? <Text style={styles.error}>{errors.firstName.message}</Text> : null}
 
-            <Text style={styles.label}>Surname</Text>
+            <Text style={styles.label}>{t('register.surname')}</Text>
             <Controller
               control={control}
               name="surname"
@@ -108,7 +112,7 @@ export default function Register() {
             />
             {errors.surname ? <Text style={styles.error}>{errors.surname.message}</Text> : null}
 
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>{t('common.password')}</Text>
             <Controller
               control={control}
               name="password"
@@ -126,7 +130,7 @@ export default function Register() {
             />
             {errors.password ? <Text style={styles.error}>{errors.password.message}</Text> : null}
 
-            <Text style={styles.label}>Phone number</Text>
+            <Text style={styles.label}>{t('register.phone')}</Text>
             <Controller
               control={control}
               name="phone"
@@ -138,7 +142,7 @@ export default function Register() {
                   onBlur={onBlur}
                   keyboardType="phone-pad"
                   autoComplete="tel"
-                  placeholder="+61"
+                  placeholder={t('register.phonePlaceholder')}
                   placeholderTextColor={Colors.GRAY_400}
                 />
               )}
@@ -146,7 +150,7 @@ export default function Register() {
             {errors.phone ? <Text style={styles.error}>{errors.phone.message}</Text> : null}
 
             <Button
-              title={isSubmitting ? 'Registering...' : 'Register'}
+              title={isSubmitting ? t('common.registering') : t('common.register')}
               uppercase={false}
               style={styles.registerButton}
               disabled={isSubmitting}
@@ -156,7 +160,7 @@ export default function Register() {
 
           <View style={styles.footer}>
             <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>Back</Text>
+              <Text style={styles.backLink}>{t('common.back')}</Text>
             </Pressable>
           </View>
         </ScrollView>

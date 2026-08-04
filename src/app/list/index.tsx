@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/Button';
 import HeaderActions from '@/components/HeaderActions';
@@ -21,6 +22,7 @@ import { styles } from './styles';
 
 export default function List() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -33,11 +35,11 @@ export default function List() {
       const { data } = await api.get<Product[]>('/products');
       setProducts(data);
     } catch {
-      setError('Could not load products. Pull to refresh and try again.');
+      setError(t('list.loadError'));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     loadProducts();
@@ -70,12 +72,12 @@ export default function List() {
           style={styles.searchInput}
           value={search}
           onChangeText={setSearch}
-          placeholder="Search products..."
+          placeholder={t('list.searchPlaceholder')}
           placeholderTextColor={Colors.GRAY_400}
         />
 
         <Button
-          title="Scan with barcode"
+          title={t('list.scanWithBarcode')}
           uppercase={false}
           style={styles.scanButton}
           onPress={() => router.push('/barcode')}
@@ -89,7 +91,7 @@ export default function List() {
       ) : error && products.length === 0 ? (
         <View style={styles.centerContent}>
           <Text style={styles.statusText}>{error}</Text>
-          <Button title="Try again" uppercase={false} onPress={loadProducts} />
+          <Button title={t('common.tryAgain')} uppercase={false} onPress={loadProducts} />
         </View>
       ) : (
         <FlatList
@@ -107,13 +109,11 @@ export default function List() {
           )}
           onRefresh={loadProducts}
           refreshing={loading && products.length > 0}
-          ListEmptyComponent={
-            <Text style={styles.statusText}>No products found.</Text>
-          }
+          ListEmptyComponent={<Text style={styles.statusText}>{t('list.empty')}</Text>}
           ListFooterComponent={
             <View style={styles.footer}>
               <Pressable onPress={() => router.back()}>
-                <Text style={styles.backLink}>Back</Text>
+                <Text style={styles.backLink}>{t('common.back')}</Text>
               </Pressable>
             </View>
           }
@@ -123,7 +123,7 @@ export default function List() {
       {(loading && products.length === 0) || (error && products.length === 0) ? (
         <View style={styles.footer}>
           <Pressable onPress={() => router.back()}>
-            <Text style={styles.backLink}>Back</Text>
+            <Text style={styles.backLink}>{t('common.back')}</Text>
           </Pressable>
         </View>
       ) : null}

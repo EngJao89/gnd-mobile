@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import HeaderActions from '@/components/HeaderActions';
 import HeaderList from '@/components/HeaderList';
@@ -21,6 +22,7 @@ const storeProfile = {
 
 export default function StoreProfile() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const address = [
     storeProfile.street,
@@ -40,21 +42,21 @@ export default function StoreProfile() {
 
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>{storeProfile.name}</Text>
-        <Text style={styles.subtitle}>Store profile</Text>
+        <Text style={styles.subtitle}>{t('storeProfile.subtitle')}</Text>
 
         <View style={styles.section}>
           <View style={styles.field}>
-            <Text style={styles.label}>Legal name</Text>
+            <Text style={styles.label}>{t('storeProfile.legalName')}</Text>
             <Text style={styles.value}>{storeProfile.legalName}</Text>
           </View>
 
           <View style={styles.field}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>{t('storeProfile.email')}</Text>
             <Text style={styles.value}>{storeProfile.email}</Text>
           </View>
 
           <View style={styles.field}>
-            <Text style={styles.label}>Address</Text>
+            <Text style={styles.label}>{t('storeProfile.address')}</Text>
             <Text style={styles.value}>{address}</Text>
           </View>
         </View>
@@ -62,7 +64,7 @@ export default function StoreProfile() {
 
       <View style={styles.footer}>
         <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>Back</Text>
+          <Text style={styles.backLink}>{t('common.back')}</Text>
         </Pressable>
       </View>
     </View>

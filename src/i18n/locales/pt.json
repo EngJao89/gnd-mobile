@@ -1,0 +1,126 @@
+{
+  "common": {
+    "back": "Voltar",
+    "ok": "OK",
+    "success": "Sucesso",
+    "error": "Erro",
+    "tryAgain": "Tentar novamente",
+    "email": "E-mail",
+    "password": "Senha",
+    "rememberMe": "Lembrar de mim",
+    "register": "Cadastrar",
+    "registering": "Cadastrando...",
+    "logIn": "Entrar",
+    "loggingIn": "Entrando...",
+    "noImage": "Sem imagem",
+    "submit": "Enviar"
+  },
+  "brand": {
+    "groceries": "Groceries",
+    "next": "Next",
+    "door": "Door"
+  },
+  "language": {
+    "label": "Idioma",
+    "pt": "PT",
+    "en": "EN"
+  },
+  "home": {
+    "signInUser": "Entrar como usuário",
+    "signInStore": "Entrar como loja",
+    "registerUser": "Cadastrar usuário",
+    "registerStore": "Cadastrar loja",
+    "continueWithoutRegistration": "Continuar sem cadastro"
+  },
+  "signin": {
+    "successMessage": "Login realizado com sucesso.",
+    "invalidCredentials": "E-mail ou senha inválidos."
+  },
+  "signinStore": {
+    "welcomeTitle": "Bem-vindo!",
+    "welcomeMessage": "Que bom ter você de volta.",
+    "invalidCredentials": "E-mail ou senha inválidos."
+  },
+  "register": {
+    "firstName": "Nome",
+    "surname": "Sobrenome",
+    "phone": "Telefone",
+    "phonePlaceholder": "+55",
+    "successMessage": "Conta criada com sucesso.",
+    "errorMessage": "Não foi possível criar a conta. Tente novamente."
+  },
+  "registerStore": {
+    "storeName": "Nome da loja",
+    "legalName": "Razão social",
+    "cnpj": "CNPJ",
+    "ownerName": "Nome do proprietário",
+    "street": "Rua",
+    "numberOrBlock": "Número ou bloco",
+    "neighborhood": "Bairro",
+    "city": "Cidade",
+    "state": "Estado",
+    "zipCode": "CEP",
+    "successMessage": "Loja criada com sucesso.",
+    "errorMessage": "Não foi possível criar a loja. Tente novamente."
+  },
+  "validation": {
+    "invalidEmail": "Endereço de e-mail inválido",
+    "passwordRequired": "Senha é obrigatória",
+    "passwordMin": "A senha deve ter pelo menos 6 caracteres",
+    "firstNameRequired": "Nome é obrigatório",
+    "surnameRequired": "Sobrenome é obrigatório",
+    "phoneRequired": "Telefone é obrigatório",
+    "nameRequired": "Nome é obrigatório",
+    "legalNameRequired": "Razão social é obrigatória",
+    "cnpjRequired": "CNPJ é obrigatório",
+    "ownerNameRequired": "Nome do proprietário é obrigatório",
+    "streetRequired": "Rua é obrigatória",
+    "numberOrBlockRequired": "Número ou bloco é obrigatório",
+    "neighborhoodRequired": "Bairro é obrigatório",
+    "cityRequired": "Cidade é obrigatória",
+    "stateRequired": "Estado é obrigatório",
+    "zipCodeRequired": "CEP é obrigatório"
+  },
+  "waytoscan": {
+    "qrCode": "QR Code",
+    "enterWithKeyboard": "Digitar código"
+  },
+  "list": {
+    "searchPlaceholder": "Buscar produtos...",
+    "scanWithBarcode": "Escanear código de barras",
+    "loadError": "Não foi possível carregar os produtos. Puxe para atualizar e tente novamente.",
+    "empty": "Nenhum produto encontrado."
+  },
+  "product": {
+    "notFound": "Produto não encontrado.",
+    "loadError": "Não foi possível carregar os detalhes do produto.",
+    "description": "Descrição",
+    "quantity": "Quantidade",
+    "addToCart": "Adicionar ao carrinho"
+  },
+  "barcode": {
+    "instruction": "Aponte a câmera para o código de barras",
+    "permissionRequired": "É necessário acesso à câmera para escanear códigos de barras.",
+    "allowCamera": "Permitir câmera"
+  },
+  "enterKeyboard": {
+    "title": "Digite o código abaixo",
+    "placeholder": "Digite o código do produto"
+  },
+  "cart": {
+    "emptyTitle": "Seu carrinho está vazio",
+    "total": "Total:",
+    "debitCredit": "Débito/Crédito"
+  },
+  "success": {
+    "title": "Obrigado!",
+    "subtitle": "esta posição estará disponível em breve.",
+    "message": "Estamos mais perto do que parece"
+  },
+  "storeProfile": {
+    "subtitle": "Perfil da loja",
+    "legalName": "Razão social",
+    "email": "E-mail",
+    "address": "Endereço"
+  }
+}

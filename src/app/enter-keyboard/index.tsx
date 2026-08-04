@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { images } from '@/constants/images';
@@ -18,6 +19,7 @@ import { styles } from './styles';
 
 export default function EnterKeyboard() {
   const router = useRouter();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [code, setCode] = useState('');
 
@@ -38,13 +40,13 @@ export default function EnterKeyboard() {
       <KeyboardAvoidingView
         style={styles.content}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <Text style={styles.title}>Enter code below</Text>
+        <Text style={styles.title}>{t('enterKeyboard.title')}</Text>
 
         <TextInput
           style={styles.input}
           value={code}
           onChangeText={setCode}
-          placeholder="Enter product code"
+          placeholder={t('enterKeyboard.placeholder')}
           placeholderTextColor={Colors.GRAY_400}
           autoCapitalize="characters"
           autoCorrect={false}
@@ -55,13 +57,13 @@ export default function EnterKeyboard() {
         <Pressable
           style={({ pressed }) => [styles.submitButton, pressed && styles.submitButtonPressed]}
           onPress={handleSubmit}>
-          <Text style={styles.submitLabel}>Submit</Text>
+          <Text style={styles.submitLabel}>{t('common.submit')}</Text>
         </Pressable>
       </KeyboardAvoidingView>
 
       <View style={styles.footer}>
         <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>Back</Text>
+          <Text style={styles.backLink}>{t('common.back')}</Text>
         </Pressable>
       </View>
     </View>

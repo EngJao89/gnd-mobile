@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   Alert,
   Image,
@@ -20,13 +21,15 @@ import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { api } from '@/lib/axios';
 
-import { type SignInStoreFormData, signInStoreSchema } from './schema';
+import { createSignInStoreSchema, type SignInStoreFormData } from './schema';
 import { styles } from './styles';
 
 export default function SignInStore() {
   const router = useRouter();
   const { signInStore } = useAuth();
+  const { t } = useTranslation();
   const [rememberMe, setRememberMe] = useState(false);
+  const signInStoreSchema = useMemo(() => createSignInStoreSchema(t), [t]);
 
   const {
     control,
@@ -48,11 +51,11 @@ export default function SignInStore() {
       }>('/store-auth/login', data);
 
       await signInStore(tokens, rememberMe);
-      Alert.alert('Welcome!', 'Glad to have you back.', [
-        { text: 'OK', onPress: () => router.replace('/list') },
+      Alert.alert(t('signinStore.welcomeTitle'), t('signinStore.welcomeMessage'), [
+        { text: t('common.ok'), onPress: () => router.replace('/list') },
       ]);
     } catch {
-      Alert.alert('Error', 'Invalid email or password.');
+      Alert.alert(t('common.error'), t('signinStore.invalidCredentials'));
     }
   }
 
@@ -64,12 +67,12 @@ export default function SignInStore() {
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <View style={styles.brandSection}>
             <View style={styles.brandContent}>
-              <Text style={styles.title}>Groceries</Text>
+              <Text style={styles.title}>{t('brand.groceries')}</Text>
 
               <View style={styles.brandRow}>
                 <View style={styles.brandText}>
-                  <Text style={styles.subtitle}>Next</Text>
-                  <Text style={styles.subtitle}>Door</Text>
+                  <Text style={styles.subtitle}>{t('brand.next')}</Text>
+                  <Text style={styles.subtitle}>{t('brand.door')}</Text>
                 </View>
 
                 <Image
@@ -82,7 +85,7 @@ export default function SignInStore() {
           </View>
 
           <View style={styles.form}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>{t('common.email')}</Text>
             <Controller
               control={control}
               name="email"
@@ -101,7 +104,7 @@ export default function SignInStore() {
             />
             {errors.email ? <Text style={styles.error}>{errors.email.message}</Text> : null}
 
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>{t('common.password')}</Text>
             <Controller
               control={control}
               name="password"
@@ -120,14 +123,14 @@ export default function SignInStore() {
             {errors.password ? <Text style={styles.error}>{errors.password.message}</Text> : null}
 
             <View style={styles.rememberRow}>
-              <Text style={styles.rememberLabel}>Remember me</Text>
+              <Text style={styles.rememberLabel}>{t('common.rememberMe')}</Text>
               <Pressable onPress={() => setRememberMe((value) => !value)}>
                 <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
               </Pressable>
             </View>
 
             <Button
-              title={isSubmitting ? 'Logging in...' : 'Log in'}
+              title={isSubmitting ? t('common.loggingIn') : t('common.logIn')}
               uppercase={false}
               style={styles.loginButton}
               disabled={isSubmitting}
@@ -137,7 +140,7 @@ export default function SignInStore() {
 
           <View style={styles.footer}>
             <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>Back</Text>
+              <Text style={styles.backLink}>{t('common.back')}</Text>
             </Pressable>
           </View>
         </ScrollView>

@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/Button';
 import HeaderActions from '@/components/HeaderActions';
@@ -15,8 +16,8 @@ import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
-import { formatPrice } from '@/lib/format-price';
 import { api } from '@/lib/axios';
+import { formatPrice } from '@/lib/format-price';
 import { getProductImageUrl } from '@/lib/get-product-image-url';
 import type { Product } from '@/types/product';
 
@@ -25,6 +26,7 @@ import { styles } from './styles';
 export default function ProductDetails() {
   const router = useRouter();
   const { isUser } = useAuth();
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -34,7 +36,7 @@ export default function ProductDetails() {
 
   const loadProduct = useCallback(async () => {
     if (!id) {
-      setError('Product not found.');
+      setError(t('product.notFound'));
       setLoading(false);
       return;
     }
@@ -46,12 +48,12 @@ export default function ProductDetails() {
       setProduct(data);
       setImageError(false);
     } catch {
-      setError('Could not load product details.');
+      setError(t('product.loadError'));
       setProduct(null);
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, t]);
 
   useEffect(() => {
     loadProduct();
@@ -71,11 +73,11 @@ export default function ProductDetails() {
         </View>
       ) : error || !product ? (
         <View style={styles.centerContent}>
-          <Text style={styles.statusText}>{error ?? 'Product not found.'}</Text>
-          <Button title="Try again" uppercase={false} onPress={loadProduct} />
+          <Text style={styles.statusText}>{error ?? t('product.notFound')}</Text>
+          <Button title={t('common.tryAgain')} uppercase={false} onPress={loadProduct} />
           <View style={styles.footer}>
             <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>Back</Text>
+              <Text style={styles.backLink}>{t('common.back')}</Text>
             </Pressable>
           </View>
         </View>
@@ -83,7 +85,7 @@ export default function ProductDetails() {
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.imageWrapper}>
             {imageError ? (
-              <Text style={styles.imageFallback}>No image</Text>
+              <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
             ) : (
               <Image
                 source={{ uri: getProductImageUrl(product.imageUrl) }}
@@ -100,10 +102,10 @@ export default function ProductDetails() {
             {product.brand} | {product.sector}
           </Text>
 
-          <Text style={styles.sectionLabel}>Description</Text>
+          <Text style={styles.sectionLabel}>{t('product.description')}</Text>
           <Text style={styles.description}>{product.description}</Text>
 
-          <Text style={styles.sectionLabel}>Quantity</Text>
+          <Text style={styles.sectionLabel}>{t('product.quantity')}</Text>
           <View style={styles.quantityRow}>
             <Pressable
               style={styles.quantityButton}
@@ -123,12 +125,12 @@ export default function ProductDetails() {
           </View>
 
           {isUser ? (
-            <Button title="Add to cart" uppercase={false} style={styles.addButton} />
+            <Button title={t('product.addToCart')} uppercase={false} style={styles.addButton} />
           ) : null}
 
           <View style={styles.footer}>
             <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>Back</Text>
+              <Text style={styles.backLink}>{t('common.back')}</Text>
             </Pressable>
           </View>
         </ScrollView>
