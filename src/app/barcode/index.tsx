@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
@@ -13,6 +14,7 @@ import { styles } from './styles';
 
 export default function BarcodeScanner() {
   const router = useRouter();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
@@ -56,13 +58,13 @@ export default function BarcodeScanner() {
           )}
         </View>
 
-        <Text style={styles.instruction}>Point your camera to barcode</Text>
+        <Text style={styles.instruction}>{t('barcode.instruction')}</Text>
 
         {!hasPermission ? (
           <>
-            <Text style={styles.permissionText}>Camera access is required to scan barcodes.</Text>
+            <Text style={styles.permissionText}>{t('barcode.permissionRequired')}</Text>
             <Button
-              title="Allow camera"
+              title={t('barcode.allowCamera')}
               uppercase={false}
               onPress={requestPermission}
               style={{ marginTop: Spacing.three, width: '100%' }}
@@ -73,7 +75,7 @@ export default function BarcodeScanner() {
 
       <View style={styles.footer}>
         <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>Back</Text>
+          <Text style={styles.backLink}>{t('common.back')}</Text>
         </Pressable>
       </View>
     </View>

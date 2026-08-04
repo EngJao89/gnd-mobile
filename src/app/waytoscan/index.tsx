@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Image, Pressable, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
@@ -8,17 +9,18 @@ import { styles } from './styles';
 
 export default function WayToScan() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.brandSection}>
         <View style={styles.brandContent}>
-          <Text style={styles.title}>Groceries</Text>
+          <Text style={styles.title}>{t('brand.groceries')}</Text>
 
           <View style={styles.brandRow}>
             <View style={styles.brandText}>
-              <Text style={styles.subtitle}>Next</Text>
-              <Text style={styles.subtitle}>Door</Text>
+              <Text style={styles.subtitle}>{t('brand.next')}</Text>
+              <Text style={styles.subtitle}>{t('brand.door')}</Text>
             </View>
 
             <Image
@@ -32,13 +34,13 @@ export default function WayToScan() {
 
       <View style={styles.actions}>
         <Button
-          title="QR-Code"
+          title={t('waytoscan.qrCode')}
           uppercase={false}
           style={styles.actionButton}
           onPress={() => router.push('/barcode')}
         />
         <Button
-          title="Enter with keyboard"
+          title={t('waytoscan.enterWithKeyboard')}
           uppercase={false}
           onPress={() => router.push('/enter-keyboard')}
         />
@@ -46,7 +48,7 @@ export default function WayToScan() {
 
       <View style={styles.footer}>
         <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>Back</Text>
+          <Text style={styles.backLink}>{t('common.back')}</Text>
         </Pressable>
       </View>
     </SafeAreaView>

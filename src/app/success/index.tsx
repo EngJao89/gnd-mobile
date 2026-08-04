@@ -1,6 +1,7 @@
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import HeaderActions from '@/components/HeaderActions';
 import HeaderList from '@/components/HeaderList';
@@ -10,6 +11,7 @@ import { styles } from './styles';
 
 export default function Success() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -22,14 +24,14 @@ export default function Success() {
       <View style={styles.content}>
         <Image source={images.success} style={styles.successImage} contentFit="contain" />
 
-        <Text style={styles.title}>Thank you!</Text>
-        <Text style={styles.subtitle}>this position will be available soon.</Text>
-        <Text style={styles.message}>We are closer than is seems</Text>
+        <Text style={styles.title}>{t('success.title')}</Text>
+        <Text style={styles.subtitle}>{t('success.subtitle')}</Text>
+        <Text style={styles.message}>{t('success.message')}</Text>
       </View>
 
       <View style={styles.footer}>
         <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>Back</Text>
+          <Text style={styles.backLink}>{t('common.back')}</Text>
         </Pressable>
       </View>
     </View>

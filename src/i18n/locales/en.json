@@ -1,0 +1,126 @@
+{
+  "common": {
+    "back": "Back",
+    "ok": "OK",
+    "success": "Success",
+    "error": "Error",
+    "tryAgain": "Try again",
+    "email": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "register": "Register",
+    "registering": "Registering...",
+    "logIn": "Log in",
+    "loggingIn": "Logging in...",
+    "noImage": "No image",
+    "submit": "Submit"
+  },
+  "brand": {
+    "groceries": "Groceries",
+    "next": "Next",
+    "door": "Door"
+  },
+  "language": {
+    "label": "Language",
+    "pt": "PT",
+    "en": "EN"
+  },
+  "home": {
+    "signInUser": "Sign In User",
+    "signInStore": "Sign in Store",
+    "registerUser": "Register User",
+    "registerStore": "Register Store",
+    "continueWithoutRegistration": "Continue without Registration"
+  },
+  "signin": {
+    "successMessage": "Logged in successfully.",
+    "invalidCredentials": "Invalid email or password."
+  },
+  "signinStore": {
+    "welcomeTitle": "Welcome!",
+    "welcomeMessage": "Glad to have you back.",
+    "invalidCredentials": "Invalid email or password."
+  },
+  "register": {
+    "firstName": "First Name",
+    "surname": "Surname",
+    "phone": "Phone number",
+    "phonePlaceholder": "+61",
+    "successMessage": "Account created successfully.",
+    "errorMessage": "Could not create account. Please try again."
+  },
+  "registerStore": {
+    "storeName": "Store name",
+    "legalName": "Legal name",
+    "cnpj": "CNPJ",
+    "ownerName": "Owner name",
+    "street": "Street",
+    "numberOrBlock": "Number or block",
+    "neighborhood": "Neighborhood",
+    "city": "City",
+    "state": "State",
+    "zipCode": "ZIP code",
+    "successMessage": "Store created successfully.",
+    "errorMessage": "Could not create store. Please try again."
+  },
+  "validation": {
+    "invalidEmail": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Password must be at least 6 characters",
+    "firstNameRequired": "First name is required",
+    "surnameRequired": "Surname is required",
+    "phoneRequired": "Phone number is required",
+    "nameRequired": "Name is required",
+    "legalNameRequired": "Legal name is required",
+    "cnpjRequired": "CNPJ is required",
+    "ownerNameRequired": "Owner name is required",
+    "streetRequired": "Street is required",
+    "numberOrBlockRequired": "Number or block is required",
+    "neighborhoodRequired": "Neighborhood is required",
+    "cityRequired": "City is required",
+    "stateRequired": "State is required",
+    "zipCodeRequired": "ZIP code is required"
+  },
+  "waytoscan": {
+    "qrCode": "QR-Code",
+    "enterWithKeyboard": "Enter with keyboard"
+  },
+  "list": {
+    "searchPlaceholder": "Search products...",
+    "scanWithBarcode": "Scan with barcode",
+    "loadError": "Could not load products. Pull to refresh and try again.",
+    "empty": "No products found."
+  },
+  "product": {
+    "notFound": "Product not found.",
+    "loadError": "Could not load product details.",
+    "description": "Description",
+    "quantity": "Quantity",
+    "addToCart": "Add to cart"
+  },
+  "barcode": {
+    "instruction": "Point your camera to barcode",
+    "permissionRequired": "Camera access is required to scan barcodes.",
+    "allowCamera": "Allow camera"
+  },
+  "enterKeyboard": {
+    "title": "Enter code below",
+    "placeholder": "Enter product code"
+  },
+  "cart": {
+    "emptyTitle": "Your cart is empty",
+    "total": "Total:",
+    "debitCredit": "Debit/Credit"
+  },
+  "success": {
+    "title": "Thank you!",
+    "subtitle": "this position will be available soon.",
+    "message": "We are closer than is seems"
+  },
+  "storeProfile": {
+    "subtitle": "Store profile",
+    "legalName": "Legal name",
+    "email": "Email",
+    "address": "Address"
+  }
+}

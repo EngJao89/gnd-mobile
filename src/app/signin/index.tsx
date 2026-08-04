@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   Alert,
   Image,
@@ -20,13 +21,15 @@ import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { api } from '@/lib/axios';
 
-import { type SignInFormData, signInSchema } from './schema';
+import { createSignInSchema, type SignInFormData } from './schema';
 import { styles } from './styles';
 
 export default function SignIn() {
   const router = useRouter();
   const { signInUser } = useAuth();
+  const { t } = useTranslation();
   const [rememberMe, setRememberMe] = useState(false);
+  const signInSchema = useMemo(() => createSignInSchema(t), [t]);
 
   const {
     control,
@@ -48,10 +51,10 @@ export default function SignIn() {
       }>('/auth/login', data);
 
       await signInUser(tokens, rememberMe);
-      Alert.alert('Success', 'Logged in successfully.');
+      Alert.alert(t('common.success'), t('signin.successMessage'));
       router.replace('/list');
     } catch {
-      Alert.alert('Error', 'Invalid email or password.');
+      Alert.alert(t('common.error'), t('signin.invalidCredentials'));
     }
   }
 
@@ -63,12 +66,12 @@ export default function SignIn() {
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <View style={styles.brandSection}>
             <View style={styles.brandContent}>
-              <Text style={styles.title}>Groceries</Text>
+              <Text style={styles.title}>{t('brand.groceries')}</Text>
 
               <View style={styles.brandRow}>
                 <View style={styles.brandText}>
-                  <Text style={styles.subtitle}>Next</Text>
-                  <Text style={styles.subtitle}>Door</Text>
+                  <Text style={styles.subtitle}>{t('brand.next')}</Text>
+                  <Text style={styles.subtitle}>{t('brand.door')}</Text>
                 </View>
 
                 <Image
@@ -81,7 +84,7 @@ export default function SignIn() {
           </View>
 
           <View style={styles.form}>
-            <Text style={styles.label}>Email</Text>
+            <Text style={styles.label}>{t('common.email')}</Text>
             <Controller
               control={control}
               name="email"
@@ -100,7 +103,7 @@ export default function SignIn() {
             />
             {errors.email ? <Text style={styles.error}>{errors.email.message}</Text> : null}
 
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>{t('common.password')}</Text>
             <Controller
               control={control}
               name="password"
@@ -119,14 +122,14 @@ export default function SignIn() {
             {errors.password ? <Text style={styles.error}>{errors.password.message}</Text> : null}
 
             <View style={styles.rememberRow}>
-              <Text style={styles.rememberLabel}>Remember me</Text>
+              <Text style={styles.rememberLabel}>{t('common.rememberMe')}</Text>
               <Pressable onPress={() => setRememberMe((value) => !value)}>
                 <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
               </Pressable>
             </View>
 
             <Button
-              title={isSubmitting ? 'Logging in...' : 'Log in'}
+              title={isSubmitting ? t('common.loggingIn') : t('common.logIn')}
               uppercase={false}
               style={styles.loginButton}
               disabled={isSubmitting}
@@ -136,7 +139,7 @@ export default function SignIn() {
 
           <View style={styles.footer}>
             <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>Back</Text>
+              <Text style={styles.backLink}>{t('common.back')}</Text>
             </Pressable>
           </View>
         </ScrollView>

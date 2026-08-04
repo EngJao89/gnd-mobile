@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import CartEmpty from '@/components/CartEmpty';
 import HeaderActions from '@/components/HeaderActions';
@@ -10,6 +11,7 @@ import { styles } from './styles';
 
 export default function Cart() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -34,14 +36,14 @@ export default function Cart() {
           </Pressable>
 
           <Pressable style={[styles.paymentButton, styles.paymentButtonRow]}>
-            <Text style={styles.debitCreditText}>Debit/Credit</Text>
+            <Text style={styles.debitCreditText}>{t('cart.debitCredit')}</Text>
             <Text style={styles.cardIcon}>💳</Text>
           </Pressable>
         </View>
 
         <View style={styles.footer}>
           <Pressable onPress={() => router.back()}>
-            <Text style={styles.backLink}>Back</Text>
+            <Text style={styles.backLink}>{t('common.back')}</Text>
           </Pressable>
         </View>
       </ScrollView>
