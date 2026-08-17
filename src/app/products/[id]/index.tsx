@@ -97,7 +97,11 @@ export default function ProductDetails() {
               )}
             </View>
             {product.store?.name ? (
-              <Text style={styles.storeName}>{product.store.name}</Text>
+              <Pressable
+                style={styles.storeButton}
+                onPress={() => router.push('/store-profile')}>
+                <Text style={styles.storeButtonText}>{product.store.name}</Text>
+              </Pressable>
             ) : null}
           </View>
 
