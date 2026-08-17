@@ -36,10 +36,18 @@ export const styles = StyleSheet.create({
     padding: Spacing.three,
     backgroundColor: Colors.GRAY_50,
   },
-  storeName: {
+  storeButton: {
     marginTop: Spacing.two,
+    paddingVertical: Spacing.two,
+    paddingHorizontal: Spacing.three,
+    borderRadius: 999,
+    backgroundColor: Colors.GREEN_700,
+    maxWidth: '100%',
+  },
+  storeButtonText: {
     fontSize: FontSize.sm,
-    color: Colors.GRAY_600,
+    fontWeight: '600',
+    color: Colors.WHITE,
     textAlign: 'center',
   },
   image: {
