@@ -83,17 +83,22 @@ export default function ProductDetails() {
         </View>
       ) : (
         <ScrollView contentContainerStyle={styles.content}>
-          <View style={styles.imageWrapper}>
-            {imageError ? (
-              <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
-            ) : (
-              <Image
-                source={{ uri: getProductImageUrl(product.imageUrl) }}
-                style={styles.image}
-                contentFit="contain"
-                onError={() => setImageError(true)}
-              />
-            )}
+          <View style={styles.imageSection}>
+            <View style={styles.imageWrapper}>
+              {imageError ? (
+                <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
+              ) : (
+                <Image
+                  source={{ uri: getProductImageUrl(product.imageUrl) }}
+                  style={styles.image}
+                  contentFit="contain"
+                  onError={() => setImageError(true)}
+                />
+              )}
+            </View>
+            {product.store?.name ? (
+              <Text style={styles.storeName}>{product.store.name}</Text>
+            ) : null}
           </View>
 
           <Text style={styles.name}>{product.name}</Text>

@@ -23,8 +23,11 @@ export const styles = StyleSheet.create({
     color: Colors.GRAY_600,
     textAlign: 'center',
   },
+  imageSection: {
+    alignItems: 'center',
+    marginBottom: Spacing.four,
+  },
   imageWrapper: {
-    alignSelf: 'center',
     width: 220,
     height: 220,
     borderWidth: 1,
@@ -32,7 +35,12 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     padding: Spacing.three,
     backgroundColor: Colors.GRAY_50,
-    marginBottom: Spacing.four,
+  },
+  storeName: {
+    marginTop: Spacing.two,
+    fontSize: FontSize.sm,
+    color: Colors.GRAY_600,
+    textAlign: 'center',
   },
   image: {
     width: '100%',

@@ -21,17 +21,24 @@ export default function ProductItem({ product }: ProductItemProps) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageWrapper}>
-        {imageError ? (
-          <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
-        ) : (
-          <Image
-            source={{ uri: imageUri }}
-            style={styles.image}
-            contentFit="contain"
-            onError={() => setImageError(true)}
-          />
-        )}
+      <View style={styles.imageColumn}>
+        <View style={styles.imageWrapper}>
+          {imageError ? (
+            <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
+          ) : (
+            <Image
+              source={{ uri: imageUri }}
+              style={styles.image}
+              contentFit="contain"
+              onError={() => setImageError(true)}
+            />
+          )}
+        </View>
+        {product.store?.name ? (
+          <Text style={styles.storeName} numberOfLines={2}>
+            {product.store.name}
+          </Text>
+        ) : null}
       </View>
 
       <View style={styles.info}>
