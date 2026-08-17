@@ -11,6 +11,11 @@ export const styles = StyleSheet.create({
     borderBottomColor: Colors.GRAY_200,
     backgroundColor: Colors.WHITE,
   },
+  imageColumn: {
+    width: 80,
+    flexShrink: 0,
+    alignItems: 'center',
+  },
   imageWrapper: {
     width: 80,
     height: 80,
@@ -21,7 +26,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.GRAY_50,
-    flexShrink: 0,
+  },
+  storeName: {
+    marginTop: Spacing.one,
+    fontSize: FontSize.xs,
+    color: Colors.GRAY_600,
+    textAlign: 'center',
+    width: '100%',
   },
   image: {
     width: '100%',
