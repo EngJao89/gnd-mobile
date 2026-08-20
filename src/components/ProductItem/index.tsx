@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -18,6 +18,10 @@ export default function ProductItem({ product }: ProductItemProps) {
   const [quantity, setQuantity] = useState(0);
   const [imageError, setImageError] = useState(false);
   const imageUri = getProductImageUrl(product.imageUrl);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [product.id, product.imageUrl]);
 
   return (
     <View style={styles.container}>
