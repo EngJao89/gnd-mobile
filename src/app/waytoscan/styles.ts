@@ -50,13 +50,8 @@ export const styles = StyleSheet.create({
   footer: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    paddingHorizontal: Spacing.four,
     paddingBottom: Spacing.five,
     paddingTop: Spacing.five,
-  },
-  backLink: {
-    color: Colors.WHITE,
-    fontSize: FontSize.lg,
-    textDecorationLine: 'underline',
   },
 });

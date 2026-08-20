@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import BackButton from '@/components/BackButton';
 import Button from '@/components/Button';
 import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
@@ -75,9 +76,7 @@ export default function ProductDetails() {
           <Text style={styles.statusText}>{error ?? t('product.notFound')}</Text>
           <Button title={t('common.tryAgain')} uppercase={false} onPress={loadProduct} />
           <View style={styles.footer}>
-            <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>{t('common.back')}</Text>
-            </Pressable>
+            <BackButton />
           </View>
         </View>
       ) : (
@@ -137,9 +136,7 @@ export default function ProductDetails() {
           ) : null}
 
           <View style={styles.footer}>
-            <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>{t('common.back')}</Text>
-            </Pressable>
+            <BackButton />
           </View>
         </ScrollView>
       )}

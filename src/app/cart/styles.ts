@@ -57,12 +57,7 @@ export const styles = StyleSheet.create({
     color: Colors.GRAY_500,
   },
   footer: {
-    alignItems: 'center',
+    width: '100%',
     paddingVertical: Spacing.four,
-  },
-  backLink: {
-    color: Colors.GRAY_900,
-    fontSize: FontSize.base,
-    textDecorationLine: 'underline',
   },
 });

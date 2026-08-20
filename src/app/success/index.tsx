@@ -1,8 +1,8 @@
 import { Image } from 'expo-image';
-import { useRouter } from 'expo-router';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import BackButton from '@/components/BackButton';
 import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
@@ -10,7 +10,6 @@ import { images } from '@/constants/images';
 import { styles } from './styles';
 
 export default function Success() {
-  const router = useRouter();
   const { t } = useTranslation();
 
   return (
@@ -26,9 +25,7 @@ export default function Success() {
       </View>
 
       <View style={styles.footer}>
-        <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>{t('common.back')}</Text>
-        </Pressable>
+        <BackButton />
       </View>
 
       <BottomTabBar />

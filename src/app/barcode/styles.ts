@@ -81,12 +81,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   footer: {
-    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: ScreenGutter,
     paddingVertical: Spacing.five,
-  },
-  backLink: {
-    color: Colors.GRAY_900,
-    fontSize: FontSize.base,
-    textDecorationLine: 'underline',
   },
 });

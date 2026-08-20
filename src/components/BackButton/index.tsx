@@ -1,36 +1,43 @@
 import { useRouter } from 'expo-router';
-import { type ReactNode } from 'react';
-import { Pressable, Text, type PressableProps, type ViewStyle } from 'react-native';
+import { type PressableProps, type ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { type BackButtonColorStyle, getBackButtonStyles } from './styles';
+import Button from '@/components/Button';
+import { type ButtonColorStyle } from '@/components/Button/styles';
 
 type BackButtonProps = Omit<PressableProps, 'style' | 'children'> & {
   title?: string;
-  color?: BackButtonColorStyle;
-  icon?: ReactNode;
+  color?: ButtonColorStyle;
+  uppercase?: boolean;
   style?: ViewStyle | ViewStyle[];
 };
 
 export default function BackButton({
   title,
   color = 'PRIMARY',
-  icon,
+  uppercase = false,
   style,
   onPress,
   ...rest
 }: BackButtonProps) {
   const router = useRouter();
   const { t } = useTranslation();
-  const buttonStyles = getBackButtonStyles(color);
+
+  let extraStyles: ViewStyle[] = [];
+  if (Array.isArray(style)) {
+    extraStyles = style;
+  } else if (style) {
+    extraStyles = [style];
+  }
 
   return (
-    <Pressable
-      style={[...buttonStyles.container, style]}
+    <Button
+      title={title ?? t('common.back')}
+      color={color}
+      uppercase={uppercase}
+      style={[{ marginTop: 0 }, ...extraStyles]}
       onPress={onPress ?? (() => router.back())}
-      {...rest}>
-      <Text style={buttonStyles.label}>{title ?? t('common.back')}</Text>
-      {icon}
-    </Pressable>
+      {...rest}
+    />
   );
 }

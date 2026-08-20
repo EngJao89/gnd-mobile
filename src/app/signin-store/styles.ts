@@ -99,12 +99,7 @@ export const styles = StyleSheet.create({
   footer: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    paddingHorizontal: Spacing.four,
     paddingTop: Spacing.three,
-  },
-  backLink: {
-    color: Colors.WHITE,
-    fontSize: FontSize.lg,
-    textDecorationLine: 'underline',
   },
 });
