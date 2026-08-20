@@ -12,6 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import BackButton from '@/components/BackButton';
 import { images } from '@/constants/images';
 import { Colors, Spacing } from '@/constants/theme';
 
@@ -62,9 +63,7 @@ export default function EnterKeyboard() {
       </KeyboardAvoidingView>
 
       <View style={styles.footer}>
-        <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>{t('common.back')}</Text>
-        </Pressable>
+        <BackButton />
       </View>
     </View>
   );

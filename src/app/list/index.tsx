@@ -109,23 +109,8 @@ export default function List() {
           onRefresh={loadProducts}
           refreshing={loading && products.length > 0}
           ListEmptyComponent={<Text style={styles.statusText}>{t('list.empty')}</Text>}
-          ListFooterComponent={
-            <View style={styles.footer}>
-              <Pressable onPress={() => router.back()}>
-                <Text style={styles.backLink}>{t('common.back')}</Text>
-              </Pressable>
-            </View>
-          }
         />
       )}
-
-      {(loading && products.length === 0) || (error && products.length === 0) ? (
-        <View style={styles.footer}>
-          <Pressable onPress={() => router.back()}>
-            <Text style={styles.backLink}>{t('common.back')}</Text>
-          </Pressable>
-        </View>
-      ) : null}
 
       <BottomTabBar />
     </View>

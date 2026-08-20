@@ -44,15 +44,4 @@ export const styles = StyleSheet.create({
     color: Colors.GRAY_600,
     textAlign: 'center',
   },
-  footer: {
-    alignItems: 'center',
-    paddingTop: Spacing.five,
-    paddingBottom: Spacing.four,
-    marginTop: Spacing.two,
-  },
-  backLink: {
-    color: Colors.GRAY_900,
-    fontSize: FontSize.base,
-    textDecorationLine: 'underline',
-  },
 });

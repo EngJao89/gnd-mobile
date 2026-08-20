@@ -8,7 +8,6 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -16,6 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import BackButton from '@/components/BackButton';
 import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
 import { api } from '@/lib/axios';
@@ -167,9 +167,7 @@ export default function RegisterStore() {
           </View>
 
           <View style={styles.footer}>
-            <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>{t('common.back')}</Text>
-            </Pressable>
+            <BackButton />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

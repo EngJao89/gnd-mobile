@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import BackButton from '@/components/BackButton';
 import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
@@ -139,9 +140,7 @@ export default function SignInStore() {
           </View>
 
           <View style={styles.footer}>
-            <Pressable onPress={() => router.back()}>
-              <Text style={styles.backLink}>{t('common.back')}</Text>
-            </Pressable>
+            <BackButton />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

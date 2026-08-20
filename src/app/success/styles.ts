@@ -41,12 +41,8 @@ export const styles = StyleSheet.create({
     lineHeight: FontSize.lg * 1.4,
   },
   footer: {
-    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: ScreenGutter,
     paddingBottom: Spacing.five,
-  },
-  backLink: {
-    color: Colors.GRAY_900,
-    fontSize: FontSize.base,
-    textDecorationLine: 'underline',
   },
 });

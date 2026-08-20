@@ -129,12 +129,7 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   footer: {
-    alignItems: 'center',
+    width: '100%',
     paddingTop: Spacing.three,
-  },
-  backLink: {
-    color: Colors.GRAY_900,
-    fontSize: FontSize.base,
-    textDecorationLine: 'underline',
   },
 });

@@ -2,10 +2,11 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import BackButton from '@/components/BackButton';
 import Button from '@/components/Button';
 import { images } from '@/constants/images';
 import { Spacing } from '@/constants/theme';
@@ -74,9 +75,7 @@ export default function BarcodeScanner() {
       </View>
 
       <View style={styles.footer}>
-        <Pressable onPress={() => router.back()}>
-          <Text style={styles.backLink}>{t('common.back')}</Text>
-        </Pressable>
+        <BackButton />
       </View>
     </View>
   );
