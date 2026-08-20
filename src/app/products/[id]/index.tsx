@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/Button';
-import HeaderActions from '@/components/HeaderActions';
+import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
@@ -64,7 +64,6 @@ export default function ProductDetails() {
       <HeaderList
         location="São Paulo, SP"
         logoSource={images.headerLogo}
-        button={<HeaderActions />}
       />
 
       {loading ? (
@@ -144,6 +143,8 @@ export default function ProductDetails() {
           </View>
         </ScrollView>
       )}
+
+      <BottomTabBar />
     </View>
   );
 }

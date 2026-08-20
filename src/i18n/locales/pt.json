@@ -20,6 +20,12 @@
     "next": "Next",
     "door": "Door"
   },
+  "navigation": {
+    "home": "Início",
+    "profile": "Perfil",
+    "cart": "Carrinho",
+    "logout": "Sair"
+  },
   "language": {
     "label": "Idioma",
     "pt": "PT",

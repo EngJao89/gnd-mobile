@@ -27,7 +27,7 @@ export default function HeaderList({ location, userName, logoSource, button }: H
           {location ? <Text style={styles.location}>{location}</Text> : null}
         </View>
 
-        <View style={styles.actionContainer}>{button}</View>
+        {button ? <View style={styles.actionContainer}>{button}</View> : null}
       </View>
 
       {userName ? (

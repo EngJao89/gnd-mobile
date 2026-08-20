@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/Button';
-import HeaderActions from '@/components/HeaderActions';
+import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
 import ProductItem from '@/components/ProductItem';
 import { Colors } from '@/constants/theme';
@@ -64,7 +64,6 @@ export default function List() {
       <HeaderList
         location="São Paulo, SP"
         logoSource={require('@/assets/images/header-logo.png')}
-        button={<HeaderActions />}
       />
 
       <View style={styles.controls}>
@@ -127,6 +126,8 @@ export default function List() {
           </Pressable>
         </View>
       ) : null}
+
+      <BottomTabBar />
     </View>
   );
 }

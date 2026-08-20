@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import HeaderActions from '@/components/HeaderActions';
+import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 
@@ -15,11 +15,7 @@ export default function Success() {
 
   return (
     <View style={styles.container}>
-      <HeaderList
-        location="Belmore, Sydney"
-        logoSource={images.headerLogo}
-        button={<HeaderActions />}
-      />
+      <HeaderList location="Belmore, Sydney" logoSource={images.headerLogo} />
 
       <View style={styles.content}>
         <Image source={images.success} style={styles.successImage} contentFit="contain" />
@@ -34,6 +30,8 @@ export default function Success() {
           <Text style={styles.backLink}>{t('common.back')}</Text>
         </Pressable>
       </View>
+
+      <BottomTabBar />
     </View>
   );
 }
