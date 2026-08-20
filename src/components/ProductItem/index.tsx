@@ -31,6 +31,7 @@ export default function ProductItem({ product }: ProductItemProps) {
             <Text style={styles.imageFallback}>{t('common.noImage')}</Text>
           ) : (
             <Image
+              recyclingKey={product.id}
               source={{ uri: imageUri }}
               style={styles.image}
               contentFit="contain"
