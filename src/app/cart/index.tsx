@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import CartEmpty from '@/components/CartEmpty';
-import HeaderActions from '@/components/HeaderActions';
+import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 
@@ -15,11 +15,7 @@ export default function Cart() {
 
   return (
     <View style={styles.container}>
-      <HeaderList
-        location="Belmore, Sydney"
-        logoSource={images.headerLogo}
-        button={<HeaderActions />}
-      />
+      <HeaderList location="Belmore, Sydney" logoSource={images.headerLogo} />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <CartEmpty />
@@ -47,6 +43,8 @@ export default function Cart() {
           </Pressable>
         </View>
       </ScrollView>
+
+      <BottomTabBar />
     </View>
   );
 }
