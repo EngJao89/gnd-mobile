@@ -1,18 +1,33 @@
-import { useRouter } from 'expo-router';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Redirect, useRouter } from 'expo-router';
+import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from '@/components/Button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 
 import { styles } from './styles';
 
 export default function Home() {
   const router = useRouter();
-  const { signOut } = useAuth();
+  const { isReady, role, signOut } = useAuth();
   const { t } = useTranslation();
+
+  if (!isReady) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.brandSection}>
+          <ActivityIndicator size="large" color={Colors.WHITE} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (role) {
+    return <Redirect href="/list" />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>

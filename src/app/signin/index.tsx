@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -21,6 +21,7 @@ import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { api } from '@/lib/axios';
+import { loadRememberedEmail, persistRememberedEmail } from '@/lib/token-storage';
 
 import { createSignInSchema, type SignInFormData } from './schema';
 import { styles } from './styles';
@@ -35,6 +36,7 @@ export default function SignIn() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
@@ -44,6 +46,27 @@ export default function SignIn() {
     },
   });
 
+  useEffect(() => {
+    let isMounted = true;
+
+    async function restoreRememberedAccount() {
+      const email = await loadRememberedEmail('user');
+
+      if (!isMounted || !email) {
+        return;
+      }
+
+      setRememberMe(true);
+      reset({ email, password: '' });
+    }
+
+    void restoreRememberedAccount();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [reset]);
+
   async function onSubmit(data: SignInFormData) {
     try {
       const { data: tokens } = await api.post<{
@@ -52,6 +75,7 @@ export default function SignIn() {
       }>('/auth/login', data);
 
       await signInUser(tokens, rememberMe);
+      await persistRememberedEmail('user', data.email, rememberMe);
       Alert.alert(t('common.success'), t('signin.successMessage'));
       router.replace('/list');
     } catch {
@@ -122,12 +146,12 @@ export default function SignIn() {
             />
             {errors.password ? <Text style={styles.error}>{errors.password.message}</Text> : null}
 
-            <View style={styles.rememberRow}>
+            <Pressable
+              style={styles.rememberRow}
+              onPress={() => setRememberMe((value) => !value)}>
               <Text style={styles.rememberLabel}>{t('common.rememberMe')}</Text>
-              <Pressable onPress={() => setRememberMe((value) => !value)}>
-                <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
-              </Pressable>
-            </View>
+              <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
+            </Pressable>
 
             <Button
               title={isSubmitting ? t('common.loggingIn') : t('common.logIn')}
