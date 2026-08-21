@@ -19,14 +19,28 @@ const TOKEN_KEYS: Record<TokenOwner, { access: string; refresh: string }> = {
   },
 };
 
+const EMAIL_KEYS: Record<TokenOwner, string> = {
+  user: 'user_remembered_email',
+  store: 'store_remembered_email',
+};
+
 let memoryTokens: AuthTokens | null = null;
 let activeOwner: TokenOwner | null = null;
 let shouldPersist = false;
 
 const canUseSecureStore = Platform.OS !== 'web';
 
+function getWebStorage() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  return window.localStorage;
+}
+
 async function setSecureItem(key: string, value: string) {
   if (!canUseSecureStore) {
+    getWebStorage()?.setItem(key, value);
     return;
   }
 
@@ -35,7 +49,7 @@ async function setSecureItem(key: string, value: string) {
 
 async function getSecureItem(key: string) {
   if (!canUseSecureStore) {
-    return null;
+    return getWebStorage()?.getItem(key) ?? null;
   }
 
   return SecureStore.getItemAsync(key);
@@ -43,6 +57,7 @@ async function getSecureItem(key: string) {
 
 async function deleteSecureItem(key: string) {
   if (!canUseSecureStore) {
+    getWebStorage()?.removeItem(key);
     return;
   }
 
@@ -130,6 +145,31 @@ export function getRefreshToken() {
 
 export function getTokenOwner() {
   return activeOwner;
+}
+
+async function saveRememberedEmail(owner: TokenOwner, email: string) {
+  await setSecureItem(EMAIL_KEYS[owner], email);
+}
+
+export async function loadRememberedEmail(owner: TokenOwner) {
+  return getSecureItem(EMAIL_KEYS[owner]);
+}
+
+async function clearRememberedEmail(owner: TokenOwner) {
+  await deleteSecureItem(EMAIL_KEYS[owner]);
+}
+
+export async function persistRememberedEmail(
+  owner: TokenOwner,
+  email: string,
+  rememberMe: boolean,
+) {
+  if (rememberMe) {
+    await saveRememberedEmail(owner, email);
+    return;
+  }
+
+  await clearRememberedEmail(owner);
 }
 
 export async function clearTokens() {
