@@ -38,13 +38,21 @@ export default function BottomTabBar() {
       href: '/store-profile',
       match: (path) => path === '/store-profile',
     },
-    {
-      key: 'cart',
-      label: t('navigation.cart'),
-      icon: '🛒',
-      href: '/cart',
-      match: (path) => path === '/cart',
-    },
+    isStore
+      ? {
+          key: 'purchases',
+          label: t('navigation.purchases'),
+          icon: '📦',
+          href: '/store-purchases',
+          match: (path) => path === '/store-purchases',
+        }
+      : {
+          key: 'cart',
+          label: t('navigation.cart'),
+          icon: '🛒',
+          href: '/cart',
+          match: (path) => path === '/cart',
+        },
   ];
 
   if (isUser || isStore) {

@@ -1,3 +1,4 @@
+import { Redirect } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -6,11 +7,17 @@ import CartEmpty from '@/components/CartEmpty';
 import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
+import { useAuth } from '@/contexts/auth';
 
 import { styles } from './styles';
 
 export default function Cart() {
   const { t } = useTranslation();
+  const { isReady, isStore } = useAuth();
+
+  if (isReady && isStore) {
+    return <Redirect href="/store-purchases" />;
+  }
 
   return (
     <View style={styles.container}>
