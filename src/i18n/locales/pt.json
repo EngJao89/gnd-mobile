@@ -127,6 +127,10 @@
     "subtitle": "Perfil da loja",
     "legalName": "Razão social",
     "email": "E-mail",
-    "address": "Endereço"
+    "address": "Endereço",
+    "products": "Produtos",
+    "emptyProducts": "Esta loja ainda não possui produtos.",
+    "loadError": "Não foi possível carregar esta loja. Tente novamente.",
+    "notFound": "Loja não encontrada."
   }
 }
