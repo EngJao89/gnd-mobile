@@ -24,6 +24,7 @@
     "home": "Início",
     "profile": "Perfil",
     "cart": "Carrinho",
+    "purchases": "Vendas",
     "logout": "Sair"
   },
   "language": {
@@ -132,5 +133,12 @@
     "emptyProducts": "Esta loja ainda não possui produtos.",
     "loadError": "Não foi possível carregar esta loja. Tente novamente.",
     "notFound": "Loja não encontrada."
+  },
+  "storePurchases": {
+    "title": "Produtos comprados",
+    "subtitle": "Produtos vendidos nesta loja",
+    "quantity": "Qtd: {{count}}",
+    "empty": "Ainda não há compras nesta loja.",
+    "loadError": "Não foi possível carregar os produtos comprados. Tente novamente."
   }
 }

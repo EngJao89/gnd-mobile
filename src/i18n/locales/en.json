@@ -24,6 +24,7 @@
     "home": "Home",
     "profile": "Profile",
     "cart": "Cart",
+    "purchases": "Sales",
     "logout": "Log out"
   },
   "language": {
@@ -132,5 +133,12 @@
     "emptyProducts": "This store has no products yet.",
     "loadError": "Could not load this store. Please try again.",
     "notFound": "Store not found."
+  },
+  "storePurchases": {
+    "title": "Purchased products",
+    "subtitle": "Products sold in this store",
+    "quantity": "Qty: {{count}}",
+    "empty": "No purchases in this store yet.",
+    "loadError": "Could not load purchased products. Please try again."
   }
 }
