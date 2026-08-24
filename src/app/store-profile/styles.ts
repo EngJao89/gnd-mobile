@@ -6,12 +6,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.WHITE,
   },
-  content: {
-    flexGrow: 1,
-    paddingHorizontal: ScreenGutter,
-    paddingTop: Spacing.four,
-    paddingBottom: Spacing.five,
-  },
   title: {
     fontSize: FontSize.xl,
     fontWeight: 'bold',
@@ -44,5 +38,35 @@ export const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: ScreenGutter,
     paddingVertical: Spacing.five,
+  },
+  list: {
+    flex: 1,
+  },
+  listContent: {
+    flexGrow: 1,
+    paddingBottom: Spacing.three,
+  },
+  headerContent: {
+    paddingHorizontal: ScreenGutter,
+    paddingTop: Spacing.four,
+  },
+  productsTitle: {
+    fontSize: FontSize.lg,
+    fontWeight: 'bold',
+    color: Colors.GRAY_900,
+    marginBottom: Spacing.two,
+  },
+  centerContent: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: ScreenGutter,
+    paddingVertical: Spacing.four,
+  },
+  statusText: {
+    fontSize: FontSize.base,
+    color: Colors.GRAY_600,
+    textAlign: 'center',
+    marginBottom: Spacing.three,
   },
 });

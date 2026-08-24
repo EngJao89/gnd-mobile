@@ -97,7 +97,12 @@ export default function ProductDetails() {
             {product.store?.name ? (
               <Pressable
                 style={styles.storeButton}
-                onPress={() => router.push('/store-profile')}>
+                onPress={() =>
+                  router.push({
+                    pathname: '/store-profile',
+                    params: { id: product.storeId ?? product.store?.id },
+                  })
+                }>
                 <Text style={styles.storeButtonText}>{product.store.name}</Text>
               </Pressable>
             ) : null}

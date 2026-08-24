@@ -11,9 +11,10 @@ import { styles } from './styles';
 
 type ProductItemProps = {
   product: Product;
+  showStoreName?: boolean;
 };
 
-export default function ProductItem({ product }: ProductItemProps) {
+export default function ProductItem({ product, showStoreName = true }: Readonly<ProductItemProps>) {
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState(0);
   const [imageError, setImageError] = useState(false);
@@ -39,7 +40,7 @@ export default function ProductItem({ product }: ProductItemProps) {
             />
           )}
         </View>
-        {product.store?.name ? (
+        {showStoreName && product.store?.name ? (
           <Text style={styles.storeName} numberOfLines={2}>
             {product.store.name}
           </Text>

@@ -127,6 +127,10 @@
     "subtitle": "Store profile",
     "legalName": "Legal name",
     "email": "Email",
-    "address": "Address"
+    "address": "Address",
+    "products": "Products",
+    "emptyProducts": "This store has no products yet.",
+    "loadError": "Could not load this store. Please try again.",
+    "notFound": "Store not found."
   }
 }
