@@ -128,6 +128,11 @@
     "subtitle": "esta posição estará disponível em breve.",
     "message": "Estamos mais perto do que parece"
   },
+  "userProfile": {
+    "subtitle": "Perfil do usuário",
+    "loadError": "Não foi possível carregar o perfil. Tente novamente.",
+    "notFound": "Perfil do usuário não encontrado."
+  },
   "storeProfile": {
     "subtitle": "Perfil da loja",
     "legalName": "Razão social",
