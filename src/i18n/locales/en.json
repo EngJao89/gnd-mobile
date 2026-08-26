@@ -117,7 +117,11 @@
   "cart": {
     "emptyTitle": "Your cart is empty",
     "total": "Total:",
-    "debitCredit": "Debit/Credit"
+    "debitCredit": "Debit/Credit",
+    "signInRequiredTitle": "Sign in required",
+    "signInRequired": "Sign in to add products to your cart.",
+    "signInAction": "Sign in",
+    "addError": "Could not add this product to the cart."
   },
   "success": {
     "title": "Thank you!",

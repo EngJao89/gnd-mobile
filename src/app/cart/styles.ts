@@ -6,10 +6,34 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.WHITE,
   },
-  scrollContent: {
+  list: {
+    flex: 1,
+  },
+  listContent: {
     flexGrow: 1,
-    paddingHorizontal: ScreenGutter,
     paddingBottom: Spacing.three,
+  },
+  footerContent: {
+    paddingHorizontal: ScreenGutter,
+  },
+  emptyWrap: {
+    paddingHorizontal: ScreenGutter,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: Spacing.four,
+  },
+  totalLabel: {
+    color: Colors.GRAY_700,
+    fontSize: FontSize.xl,
+    fontWeight: 'bold',
+  },
+  totalValue: {
+    color: Colors.GRAY_700,
+    fontSize: FontSize.xl,
+    fontWeight: 'bold',
   },
   payments: {
     marginTop: Spacing.five,

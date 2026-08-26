@@ -1,8 +1,11 @@
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { useAuth } from '@/contexts/auth';
+import { useCart } from '@/contexts/cart';
 import { formatPrice } from '@/lib/format-price';
 import { getProductImageUrl } from '@/lib/get-product-image-url';
 import type { Product } from '@/types/product';
@@ -15,14 +18,47 @@ type ProductItemProps = {
 };
 
 export default function ProductItem({ product, showStoreName = true }: Readonly<ProductItemProps>) {
+  const router = useRouter();
   const { t } = useTranslation();
-  const [quantity, setQuantity] = useState(0);
+  const { isUser, isStore } = useAuth();
+  const { addItem, getQuantity, isUpdating } = useCart();
+  const [localQuantity, setLocalQuantity] = useState(0);
   const [imageError, setImageError] = useState(false);
   const imageUri = getProductImageUrl(product.imageUrl);
+  const quantity = isUser ? getQuantity(product.id) : localQuantity;
+  const updating = isUpdating(product.id);
 
   useEffect(() => {
     setImageError(false);
   }, [product.id, product.imageUrl]);
+
+  async function handleIncrement() {
+    if (isStore) {
+      return;
+    }
+
+    if (!isUser) {
+      Alert.alert(t('cart.signInRequiredTitle'), t('cart.signInRequired'), [
+        { text: t('common.ok') },
+        { text: t('cart.signInAction'), onPress: () => router.push('/signin') },
+      ]);
+      return;
+    }
+
+    try {
+      await addItem(product.id, 1, product);
+    } catch {
+      Alert.alert(t('common.error'), t('cart.addError'));
+    }
+  }
+
+  function handleDecrement() {
+    if (isUser || isStore) {
+      return;
+    }
+
+    setLocalQuantity((current) => Math.max(0, current - 1));
+  }
 
   return (
     <View style={styles.container}>
@@ -59,10 +95,13 @@ export default function ProductItem({ product, showStoreName = true }: Readonly<
           {product.brand} | {product.sector}
         </Text>
 
-        <View style={styles.quantityRow}>
+        <View
+          style={styles.quantityRow}
+          onStartShouldSetResponder={() => true}>
           <Pressable
             style={styles.quantityButton}
-            onPress={() => setQuantity((current) => Math.max(0, current - 1))}>
+            disabled={updating}
+            onPress={handleDecrement}>
             <Text style={styles.quantityButtonText}>-</Text>
           </Pressable>
 
@@ -72,7 +111,8 @@ export default function ProductItem({ product, showStoreName = true }: Readonly<
 
           <Pressable
             style={styles.quantityButton}
-            onPress={() => setQuantity((current) => current + 1)}>
+            disabled={updating || isStore}
+            onPress={handleIncrement}>
             <Text style={styles.quantityButtonText}>+</Text>
           </Pressable>
         </View>
