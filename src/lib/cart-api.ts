@@ -67,6 +67,6 @@ export async function addCartItem(productId: string, quantity: number) {
 }
 
 export async function getCart() {
-  const { data } = await api.get('/cart');
+  const { data } = await api.get('/cart', { skipAuthRefresh: true });
   return normalizeCart(data);
 }

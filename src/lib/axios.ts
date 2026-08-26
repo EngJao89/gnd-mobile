@@ -6,6 +6,7 @@ import {
   getAccessToken,
   getRefreshToken,
   getTokenOwner,
+  normalizeAuthTokens,
   saveTokens,
   type AuthTokens,
   type TokenOwner,
@@ -13,7 +14,14 @@ import {
 
 type RetriableRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean;
+  skipAuthRefresh?: boolean;
 };
+
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    skipAuthRefresh?: boolean;
+  }
+}
 
 type AuthFailureListener = () => void;
 
@@ -117,10 +125,13 @@ api.interceptors.response.use(
 
     const refreshToken = getRefreshToken();
     const owner = getTokenOwner();
+    const skipLogout = Boolean(originalRequest.skipAuthRefresh);
 
     if (!refreshToken || !owner) {
-      await clearTokens();
-      notifyAuthFailure();
+      if (!skipLogout) {
+        await clearTokens();
+        notifyAuthFailure();
+      }
       return Promise.reject(error);
     }
 
@@ -140,16 +151,23 @@ api.interceptors.response.use(
       const { data } = await refreshClient.post<AuthTokens>(getRefreshEndpoint(owner), {
         refreshToken,
       });
+      const tokens = normalizeAuthTokens(data);
 
-      await saveTokens(owner, data);
-      processRefreshQueue(null, data.accessToken);
+      if (!tokens) {
+        throw new Error('Invalid refresh tokens');
+      }
 
-      originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+      await saveTokens(owner, tokens);
+      processRefreshQueue(null, tokens.accessToken);
+
+      originalRequest.headers.Authorization = `Bearer ${tokens.accessToken}`;
       return api(originalRequest);
     } catch (refreshError) {
       processRefreshQueue(refreshError, null);
-      await clearTokens();
-      notifyAuthFailure();
+      if (!skipLogout) {
+        await clearTokens();
+        notifyAuthFailure();
+      }
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
