@@ -3,6 +3,7 @@ import { DarkTheme, DefaultTheme, Slot, ThemeProvider } from 'expo-router';
 import { useColorScheme } from 'react-native';
 
 import { AuthProvider } from '@/contexts/auth';
+import { CartProvider } from '@/contexts/cart';
 import { initLanguagePreference } from '@/i18n';
 
 import '@/i18n';
@@ -17,7 +18,9 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AuthProvider>
-        <Slot />
+        <CartProvider>
+          <Slot />
+        </CartProvider>
       </AuthProvider>
     </ThemeProvider>
   );

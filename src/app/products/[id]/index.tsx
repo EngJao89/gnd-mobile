@@ -3,6 +3,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   ScrollView,
   Text,
@@ -17,6 +18,7 @@ import HeaderList from '@/components/HeaderList';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
+import { useCart } from '@/contexts/cart';
 import { api } from '@/lib/axios';
 import { formatPrice } from '@/lib/format-price';
 import { getProductImageUrl } from '@/lib/get-product-image-url';
@@ -27,6 +29,7 @@ import { styles } from './styles';
 export default function ProductDetails() {
   const router = useRouter();
   const { isUser } = useAuth();
+  const { addItem, getQuantity, isUpdating } = useCart();
   const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -59,6 +62,31 @@ export default function ProductDetails() {
   useEffect(() => {
     loadProduct();
   }, [loadProduct]);
+
+  async function handleAddToCart() {
+    if (!product) {
+      return;
+    }
+
+    try {
+      await addItem(product.id, 1, product);
+    } catch {
+      Alert.alert(t('common.error'), t('cart.addError'));
+    }
+  }
+
+  async function handleIncrementQuantity() {
+    if (!product || !isUser) {
+      setQuantity((current) => current + 1);
+      return;
+    }
+
+    try {
+      await addItem(product.id, 1, product);
+    } catch {
+      Alert.alert(t('common.error'), t('cart.addError'));
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -121,23 +149,33 @@ export default function ProductDetails() {
           <View style={styles.quantityRow}>
             <Pressable
               style={styles.quantityButton}
+              disabled={isUpdating(product.id)}
               onPress={() => setQuantity((current) => Math.max(1, current - 1))}>
               <Text style={styles.quantityButtonText}>-</Text>
             </Pressable>
 
             <View style={styles.quantityValue}>
-              <Text style={styles.quantityValueText}>{quantity}</Text>
+              <Text style={styles.quantityValueText}>
+                {isUser ? getQuantity(product.id) : quantity}
+              </Text>
             </View>
 
             <Pressable
               style={styles.quantityButton}
-              onPress={() => setQuantity((current) => current + 1)}>
+              disabled={isUpdating(product.id)}
+              onPress={handleIncrementQuantity}>
               <Text style={styles.quantityButtonText}>+</Text>
             </Pressable>
           </View>
 
           {isUser ? (
-            <Button title={t('product.addToCart')} uppercase={false} style={styles.addButton} />
+            <Button
+              title={t('product.addToCart')}
+              uppercase={false}
+              style={styles.addButton}
+              disabled={isUpdating(product.id)}
+              onPress={handleAddToCart}
+            />
           ) : null}
 
           <View style={styles.footer}>

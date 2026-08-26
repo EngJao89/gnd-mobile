@@ -117,7 +117,11 @@
   "cart": {
     "emptyTitle": "Seu carrinho está vazio",
     "total": "Total:",
-    "debitCredit": "Débito/Crédito"
+    "debitCredit": "Débito/Crédito",
+    "signInRequiredTitle": "Login necessário",
+    "signInRequired": "Entre na sua conta para adicionar produtos ao carrinho.",
+    "signInAction": "Entrar",
+    "addError": "Não foi possível adicionar este produto ao carrinho."
   },
   "success": {
     "title": "Obrigado!",
