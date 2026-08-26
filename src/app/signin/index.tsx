@@ -21,7 +21,7 @@ import Button from '@/components/Button';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
 import { api } from '@/lib/axios';
-import { loadRememberedEmail, persistRememberedEmail } from '@/lib/token-storage';
+import { loadRememberedEmail, persistRememberedEmail, normalizeAuthTokens } from '@/lib/token-storage';
 
 import { createSignInSchema, type SignInFormData } from './schema';
 import { styles } from './styles';
@@ -67,15 +67,17 @@ export default function SignIn() {
     };
   }, [reset]);
 
-  async function onSubmit(data: SignInFormData) {
+  async function onSubmit(form: SignInFormData) {
     try {
-      const { data: tokens } = await api.post<{
-        accessToken: string;
-        refreshToken: string;
-      }>('/auth/login', data);
+      const { data } = await api.post('/auth/login', form);
+      const tokens = normalizeAuthTokens(data);
+
+      if (!tokens) {
+        throw new Error('Invalid auth tokens');
+      }
 
       await signInUser(tokens, rememberMe);
-      await persistRememberedEmail('user', data.email, rememberMe);
+      await persistRememberedEmail('user', form.email, rememberMe);
       Alert.alert(t('common.success'), t('signin.successMessage'));
       router.replace('/list');
     } catch {

@@ -8,6 +8,33 @@ export type AuthTokens = {
 
 export type TokenOwner = 'user' | 'store';
 
+function readToken(value: unknown) {
+  return typeof value === 'string' && value.length > 0 ? value : null;
+}
+
+export function normalizeAuthTokens(payload: unknown): AuthTokens | null {
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  const data = payload as Record<string, unknown>;
+  const nestedCandidates = [data.tokens, data.data, data];
+
+  for (const candidate of nestedCandidates) {
+    if (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) {
+      const nested = candidate as Record<string, unknown>;
+      const accessToken = readToken(nested.accessToken ?? nested.access_token);
+      const refreshToken = readToken(nested.refreshToken ?? nested.refresh_token);
+
+      if (accessToken && refreshToken) {
+        return { accessToken, refreshToken };
+      }
+    }
+  }
+
+  return null;
+}
+
 const TOKEN_KEYS: Record<TokenOwner, { access: string; refresh: string }> = {
   user: {
     access: 'user_access_token',
@@ -88,13 +115,19 @@ export async function saveTokens(
   tokens: AuthTokens,
   persist?: boolean,
 ) {
+  const normalized = normalizeAuthTokens(tokens);
+
+  if (!normalized) {
+    throw new Error('Invalid auth tokens');
+  }
+
   if (persist !== undefined) {
     shouldPersist = persist;
   }
 
   const otherOwner: TokenOwner = owner === 'user' ? 'store' : 'user';
 
-  memoryTokens = tokens;
+  memoryTokens = normalized;
   activeOwner = owner;
 
   await clearOwnerKeys(otherOwner);
@@ -102,8 +135,8 @@ export async function saveTokens(
   if (shouldPersist) {
     const keys = TOKEN_KEYS[owner];
     await Promise.all([
-      setSecureItem(keys.access, tokens.accessToken),
-      setSecureItem(keys.refresh, tokens.refreshToken),
+      setSecureItem(keys.access, normalized.accessToken),
+      setSecureItem(keys.refresh, normalized.refreshToken),
     ]);
   } else {
     await clearOwnerKeys(owner);
