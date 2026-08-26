@@ -22,6 +22,13 @@ export default function BottomTabBar() {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const { isUser, isStore, signOut } = useAuth();
+  let profileHref = '/signin';
+
+  if (isStore) {
+    profileHref = '/store-profile';
+  } else if (isUser) {
+    profileHref = '/profile';
+  }
 
   const tabs: TabItem[] = [
     {
@@ -34,9 +41,9 @@ export default function BottomTabBar() {
     {
       key: 'profile',
       label: t('navigation.profile'),
-      icon: '🏪',
-      href: '/store-profile',
-      match: (path) => path === '/store-profile',
+      icon: isStore ? '🏪' : '👤',
+      href: profileHref,
+      match: (path) => (isStore ? path === '/store-profile' : path === '/profile'),
     },
     isStore
       ? {

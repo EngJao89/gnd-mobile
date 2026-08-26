@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -67,7 +67,7 @@ async function fetchAuthenticatedStore() {
 
 export default function StoreProfile() {
   const router = useRouter();
-  const { isStore } = useAuth();
+  const { isReady, isUser, isStore } = useAuth();
   const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id?: string | string[] }>();
   const storeIdFromRoute = getParamValue(id);
@@ -96,14 +96,16 @@ export default function StoreProfile() {
         }
       }
 
-      const { data } = await api.get<Product[]>('/products', {
-        params: storeId ? { storeId } : undefined,
-      });
-
       if (!storeId) {
-        loadedStore = data[0]?.store ?? loadedStore;
-        storeId = loadedStore?.id ?? data[0]?.storeId ?? null;
+        setStore(null);
+        setProducts([]);
+        setError(t('storeProfile.notFound'));
+        return;
       }
+
+      const { data } = await api.get<Product[]>('/products', {
+        params: { storeId },
+      });
 
       const resolvedStoreId = storeId;
       const storeProducts = resolvedStoreId
@@ -131,8 +133,16 @@ export default function StoreProfile() {
   }, [isStore, storeIdFromRoute, t]);
 
   useEffect(() => {
+    if (!isReady || (isUser && !storeIdFromRoute)) {
+      return;
+    }
+
     void loadStoreProfile();
-  }, [loadStoreProfile]);
+  }, [isReady, isUser, loadStoreProfile, storeIdFromRoute]);
+
+  if (isReady && isUser && !storeIdFromRoute) {
+    return <Redirect href="/profile" />;
+  }
 
   const address = useMemo(() => (store ? formatStoreAddress(store) : ''), [store]);
   const location = store ? `${store.city}, ${store.state}` : undefined;

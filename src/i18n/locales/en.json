@@ -128,6 +128,11 @@
     "subtitle": "this position will be available soon.",
     "message": "We are closer than is seems"
   },
+  "userProfile": {
+    "subtitle": "User profile",
+    "loadError": "Could not load your profile. Please try again.",
+    "notFound": "User profile not found."
+  },
   "storeProfile": {
     "subtitle": "Store profile",
     "legalName": "Legal name",
