@@ -191,6 +191,7 @@ export default function StoreProfile() {
               </View>
             </View>
 
+            <View style={styles.productsSeparator} />
             <Text style={styles.productsTitle}>{t('storeProfile.products')}</Text>
           </View>
         }

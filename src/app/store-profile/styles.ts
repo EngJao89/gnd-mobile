@@ -50,6 +50,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: ScreenGutter,
     paddingTop: Spacing.four,
   },
+  productsSeparator: {
+    height: 1,
+    backgroundColor: Colors.GRAY_200,
+    marginBottom: Spacing.three,
+  },
   productsTitle: {
     fontSize: FontSize.lg,
     fontWeight: 'bold',
