@@ -130,6 +130,7 @@
   },
   "userProfile": {
     "subtitle": "User profile",
+    "photo": "Profile photo",
     "loadError": "Could not load your profile. Please try again.",
     "notFound": "User profile not found."
   },

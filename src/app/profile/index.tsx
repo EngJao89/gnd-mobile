@@ -7,6 +7,7 @@ import BackButton from '@/components/BackButton';
 import Button from '@/components/Button';
 import BottomTabBar from '@/components/BottomTabBar';
 import HeaderList from '@/components/HeaderList';
+import ProfilePhoto from '@/components/ProfilePhoto';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
@@ -124,6 +125,10 @@ export default function Profile() {
   } else if (user) {
     content = (
       <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.photoWrap}>
+          <ProfilePhoto name={displayName} />
+        </View>
+
         <Text style={styles.title}>{displayName || t('userProfile.subtitle')}</Text>
         <Text style={styles.subtitle}>{t('userProfile.subtitle')}</Text>
 
