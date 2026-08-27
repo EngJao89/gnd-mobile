@@ -130,6 +130,7 @@
   },
   "userProfile": {
     "subtitle": "Perfil do usuário",
+    "photo": "Foto de perfil",
     "loadError": "Não foi possível carregar o perfil. Tente novamente.",
     "notFound": "Perfil do usuário não encontrado."
   },

@@ -12,6 +12,10 @@ export const styles = StyleSheet.create({
     paddingTop: Spacing.four,
     paddingBottom: Spacing.five,
   },
+  photoWrap: {
+    alignItems: 'center',
+    marginBottom: Spacing.four,
+  },
   title: {
     fontSize: FontSize.xl,
     fontWeight: 'bold',
