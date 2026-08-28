@@ -45,22 +45,35 @@ export default function BottomTabBar() {
       href: profileHref,
       match: (path) => (isStore ? path === '/store-profile' : path === '/profile'),
     },
-    isStore
-      ? {
-          key: 'purchases',
-          label: t('navigation.purchases'),
-          icon: '📦',
-          href: '/store-purchases',
-          match: (path) => path === '/store-purchases',
-        }
-      : {
-          key: 'cart',
-          label: t('navigation.cart'),
-          icon: '🛒',
-          href: '/cart',
-          match: (path) => path === '/cart',
-        },
   ];
+
+  if (isStore) {
+    tabs.push({
+      key: 'purchases',
+      label: t('navigation.purchases'),
+      icon: '📦',
+      href: '/store-purchases',
+      match: (path) => path === '/store-purchases',
+    });
+  } else {
+    tabs.push({
+      key: 'cart',
+      label: t('navigation.cart'),
+      icon: '🛒',
+      href: '/cart',
+      match: (path) => path === '/cart',
+    });
+  }
+
+  if (isUser) {
+    tabs.push({
+      key: 'orders',
+      label: t('navigation.orders'),
+      icon: '📋',
+      href: '/orders',
+      match: (path) => path === '/orders',
+    });
+  }
 
   if (isUser || isStore) {
     tabs.push({

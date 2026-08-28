@@ -24,6 +24,7 @@
     "home": "Início",
     "profile": "Perfil",
     "cart": "Carrinho",
+    "orders": "Pedidos",
     "purchases": "Vendas",
     "logout": "Sair"
   },
@@ -132,6 +133,23 @@
     "subtitle": "Seu pedido foi enviado para a loja.",
     "subtitle_other": "{{count}} pedidos foram enviados para as lojas.",
     "message": "A loja vai confirmar o pedido em breve."
+  },
+  "orders": {
+    "title": "Meus pedidos",
+    "subtitle": "Pedidos enviados para as lojas",
+    "empty": "Você ainda não fez nenhum pedido.",
+    "loadError": "Não foi possível carregar os pedidos. Tente novamente.",
+    "fallbackTitle": "Pedido {{id}}",
+    "itemFallback": "Produto",
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} itens",
+    "status": {
+      "pending": "Pendente",
+      "confirmed": "Confirmado",
+      "completed": "Concluído",
+      "cancelled": "Cancelado",
+      "canceled": "Cancelado"
+    }
   },
   "userProfile": {
     "subtitle": "Perfil do usuário",

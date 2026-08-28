@@ -24,6 +24,7 @@
     "home": "Home",
     "profile": "Profile",
     "cart": "Cart",
+    "orders": "Orders",
     "purchases": "Sales",
     "logout": "Log out"
   },
@@ -132,6 +133,23 @@
     "subtitle": "Your order was sent to the store.",
     "subtitle_other": "{{count}} orders were sent to the stores.",
     "message": "The store will confirm the order soon."
+  },
+  "orders": {
+    "title": "My orders",
+    "subtitle": "Orders sent to stores",
+    "empty": "You have no orders yet.",
+    "loadError": "Could not load orders. Please try again.",
+    "fallbackTitle": "Order {{id}}",
+    "itemFallback": "Product",
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} items",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "canceled": "Cancelled"
+    }
   },
   "userProfile": {
     "subtitle": "User profile",
