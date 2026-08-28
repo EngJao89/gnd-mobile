@@ -35,6 +35,29 @@ export const styles = StyleSheet.create({
     fontSize: FontSize.xl,
     fontWeight: 'bold',
   },
+  notesLabel: {
+    marginTop: Spacing.four,
+    marginBottom: Spacing.one,
+    fontSize: FontSize.sm,
+    fontWeight: '600',
+    color: Colors.GRAY_500,
+    textTransform: 'uppercase',
+  },
+  notesInput: {
+    minHeight: 72,
+    borderWidth: 1,
+    borderColor: Colors.GRAY_300,
+    borderRadius: 8,
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.two,
+    fontSize: FontSize.base,
+    color: Colors.GRAY_900,
+    textAlignVertical: 'top',
+    backgroundColor: Colors.WHITE,
+  },
+  checkoutSpinner: {
+    marginTop: Spacing.three,
+  },
   payments: {
     marginTop: Spacing.five,
     gap: Spacing.three,
@@ -50,6 +73,9 @@ export const styles = StyleSheet.create({
     paddingVertical: Spacing.three,
     paddingHorizontal: Spacing.four,
     minHeight: 56,
+  },
+  paymentButtonDisabled: {
+    opacity: 0.5,
   },
   paymentButtonRow: {
     justifyContent: 'space-between',

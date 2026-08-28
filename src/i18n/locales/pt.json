@@ -118,15 +118,20 @@
     "emptyTitle": "Seu carrinho está vazio",
     "total": "Total:",
     "debitCredit": "Débito/Crédito",
+    "notesLabel": "Observações",
+    "notesPlaceholder": "Preferência de entrega, ponto de referência...",
     "signInRequiredTitle": "Login necessário",
     "signInRequired": "Entre na sua conta para adicionar produtos ao carrinho.",
+    "checkoutSignInRequired": "Entre na sua conta para finalizar a compra.",
     "signInAction": "Entrar",
-    "addError": "Não foi possível adicionar este produto ao carrinho."
+    "addError": "Não foi possível adicionar este produto ao carrinho.",
+    "checkoutError": "Não foi possível finalizar a compra. Tente novamente."
   },
   "success": {
     "title": "Obrigado!",
-    "subtitle": "esta posição estará disponível em breve.",
-    "message": "Estamos mais perto do que parece"
+    "subtitle": "Seu pedido foi enviado para a loja.",
+    "subtitle_other": "{{count}} pedidos foram enviados para as lojas.",
+    "message": "A loja vai confirmar o pedido em breve."
   },
   "userProfile": {
     "subtitle": "Perfil do usuário",
