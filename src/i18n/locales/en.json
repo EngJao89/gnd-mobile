@@ -118,15 +118,20 @@
     "emptyTitle": "Your cart is empty",
     "total": "Total:",
     "debitCredit": "Debit/Credit",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Delivery preference, landmark...",
     "signInRequiredTitle": "Sign in required",
     "signInRequired": "Sign in to add products to your cart.",
+    "checkoutSignInRequired": "Sign in to complete your purchase.",
     "signInAction": "Sign in",
-    "addError": "Could not add this product to the cart."
+    "addError": "Could not add this product to the cart.",
+    "checkoutError": "Could not complete checkout. Please try again."
   },
   "success": {
     "title": "Thank you!",
-    "subtitle": "this position will be available soon.",
-    "message": "We are closer than is seems"
+    "subtitle": "Your order was sent to the store.",
+    "subtitle_other": "{{count}} orders were sent to the stores.",
+    "message": "The store will confirm the order soon."
   },
   "userProfile": {
     "subtitle": "User profile",

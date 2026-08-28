@@ -10,13 +10,17 @@ import {
 
 import { useAuth } from '@/contexts/auth';
 import { addCartItem, getCart } from '@/lib/cart-api';
+import { checkoutCart } from '@/lib/orders-api';
 import type { CartItem } from '@/types/cart';
+import type { CheckoutResult } from '@/types/order';
 import type { Product } from '@/types/product';
 
 type CartContextValue = {
   items: CartItem[];
   isLoading: boolean;
+  isCheckingOut: boolean;
   addItem: (productId: string, quantity: number, product?: Product) => Promise<void>;
+  checkout: (notes?: string) => Promise<CheckoutResult>;
   getQuantity: (productId: string) => number;
   isUpdating: (productId: string) => boolean;
   reload: () => Promise<void>;
@@ -57,6 +61,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const { isReady, isUser } = useAuth();
   const [items, setItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set());
 
   const reload = useCallback(async () => {
@@ -125,16 +130,30 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const isUpdating = useCallback((productId: string) => pendingIds.has(productId), [pendingIds]);
 
+  const checkout = useCallback(async (notes = '') => {
+    setIsCheckingOut(true);
+
+    try {
+      const result = await checkoutCart(notes);
+      setItems([]);
+      return result;
+    } finally {
+      setIsCheckingOut(false);
+    }
+  }, []);
+
   const value = useMemo(
     () => ({
       items,
       isLoading,
+      isCheckingOut,
       addItem,
+      checkout,
       getQuantity,
       isUpdating,
       reload,
     }),
-    [items, isLoading, addItem, getQuantity, isUpdating, reload],
+    [items, isLoading, isCheckingOut, addItem, checkout, getQuantity, isUpdating, reload],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
