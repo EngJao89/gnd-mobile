@@ -11,13 +11,45 @@ import OrderCard from '@/components/OrderCard';
 import { images } from '@/constants/images';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth';
-import { cancelOrder, getOrders } from '@/lib/orders-api';
+import type { OrderStatus } from '@/lib/order-status';
+import { getStoreOrders, updateStoreOrderStatus } from '@/lib/orders-api';
 import type { Order } from '@/types/order';
 
 import { styles } from './styles';
 
-export default function Orders() {
-  const { isReady, isUser, isStore } = useAuth();
+function getStatusConfirmCopy(
+  status: OrderStatus,
+  t: (key: string) => string,
+) {
+  if (status === 'ACCEPTED') {
+    return {
+      title: t('storeOrders.confirm.acceptedTitle'),
+      message: t('storeOrders.confirm.acceptedMessage'),
+    };
+  }
+
+  if (status === 'REJECTED') {
+    return {
+      title: t('storeOrders.confirm.rejectedTitle'),
+      message: t('storeOrders.confirm.rejectedMessage'),
+    };
+  }
+
+  if (status === 'COMPLETED') {
+    return {
+      title: t('storeOrders.confirm.completedTitle'),
+      message: t('storeOrders.confirm.completedMessage'),
+    };
+  }
+
+  return {
+    title: t('storeOrders.confirm.cancelledTitle'),
+    message: t('storeOrders.confirm.cancelledMessage'),
+  };
+}
+
+export default function StoreOrders() {
+  const { isReady, isStore } = useAuth();
   const { t } = useTranslation();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,10 +60,10 @@ export default function Orders() {
     try {
       setLoading(true);
       setError(null);
-      setOrders(await getOrders());
+      setOrders(await getStoreOrders());
     } catch {
       setOrders([]);
-      setError(t('orders.loadError'));
+      setError(t('storeOrders.loadError'));
     } finally {
       setLoading(false);
     }
@@ -39,43 +71,51 @@ export default function Orders() {
 
   useFocusEffect(
     useCallback(() => {
-      if (!isReady || !isUser) {
+      if (!isReady || !isStore) {
         return;
       }
 
       void loadOrders();
-    }, [isReady, isUser, loadOrders]),
+    }, [isReady, isStore, loadOrders]),
   );
 
-  function handleCancel(order: Order) {
-    Alert.alert(t('orders.cancelTitle'), t('orders.cancelMessage'), [
+  async function applyStatus(orderId: string, status: OrderStatus) {
+    try {
+      setUpdatingId(orderId);
+      const updated = await updateStoreOrderStatus(orderId, status);
+
+      if (updated) {
+        setOrders((current) =>
+          current.map((order) => (order.id === orderId ? { ...order, ...updated } : order)),
+        );
+      }
+
+      await loadOrders();
+    } catch {
+      Alert.alert(t('common.error'), t('storeOrders.updateError'));
+    } finally {
+      setUpdatingId(null);
+    }
+  }
+
+  function handleStatusChange(order: Order, status: OrderStatus) {
+    const isDanger = status === 'REJECTED' || status === 'CANCELLED';
+    const confirm = getStatusConfirmCopy(status, t);
+
+    Alert.alert(confirm.title, confirm.message, [
       { text: t('common.back'), style: 'cancel' },
       {
-        text: t('orders.actions.cancel'),
-        style: 'destructive',
+        text: t('common.ok'),
+        style: isDanger ? 'destructive' : 'default',
         onPress: () => {
-          void (async () => {
-            try {
-              setUpdatingId(order.id);
-              await cancelOrder(order.id);
-              await loadOrders();
-            } catch {
-              Alert.alert(t('common.error'), t('orders.cancelError'));
-            } finally {
-              setUpdatingId(null);
-            }
-          })();
+          void applyStatus(order.id, status);
         },
       },
     ]);
   }
 
-  if (isReady && isStore) {
-    return <Redirect href="/store-orders" />;
-  }
-
-  if (isReady && !isUser) {
-    return <Redirect href="/signin" />;
+  if (isReady && !isStore) {
+    return <Redirect href="/orders" />;
   }
 
   let content = null;
@@ -102,8 +142,9 @@ export default function Orders() {
         renderItem={({ item }) => (
           <OrderCard
             order={item}
+            variant="store"
             isUpdating={updatingId === item.id}
-            onCancel={() => handleCancel(item)}
+            onStatusChange={(status) => handleStatusChange(item, status)}
           />
         )}
         onRefresh={loadOrders}
@@ -114,11 +155,11 @@ export default function Orders() {
         ]}
         ListHeaderComponent={
           <View style={styles.headerContent}>
-            <Text style={styles.title}>{t('orders.title')}</Text>
-            <Text style={styles.subtitle}>{t('orders.subtitle')}</Text>
+            <Text style={styles.title}>{t('storeOrders.title')}</Text>
+            <Text style={styles.subtitle}>{t('storeOrders.subtitle')}</Text>
           </View>
         }
-        ListEmptyComponent={<Text style={styles.statusText}>{t('orders.empty')}</Text>}
+        ListEmptyComponent={<Text style={styles.statusText}>{t('storeOrders.empty')}</Text>}
       />
     );
   }

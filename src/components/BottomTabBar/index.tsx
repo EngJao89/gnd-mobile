@@ -52,8 +52,8 @@ export default function BottomTabBar() {
       key: 'purchases',
       label: t('navigation.purchases'),
       icon: '📦',
-      href: '/store-purchases',
-      match: (path) => path === '/store-purchases',
+      href: '/store-orders',
+      match: (path) => path === '/store-orders' || path === '/store-purchases',
     });
   } else {
     tabs.push({

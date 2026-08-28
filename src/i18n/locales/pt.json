@@ -145,11 +145,22 @@
     "itemCount_other": "{{count}} itens",
     "status": {
       "pending": "Pendente",
+      "accepted": "Aceito",
+      "rejected": "Recusado",
       "confirmed": "Confirmado",
       "completed": "Concluído",
       "cancelled": "Cancelado",
       "canceled": "Cancelado"
-    }
+    },
+    "actions": {
+      "accept": "Aceitar",
+      "reject": "Recusar",
+      "complete": "Concluir",
+      "cancel": "Cancelar"
+    },
+    "cancelTitle": "Cancelar pedido",
+    "cancelMessage": "O pedido só pode ser cancelado enquanto a loja ainda não respondeu.",
+    "cancelError": "Não foi possível cancelar o pedido. Tente novamente."
   },
   "userProfile": {
     "subtitle": "Perfil do usuário",
@@ -166,6 +177,23 @@
     "emptyProducts": "Esta loja ainda não possui produtos.",
     "loadError": "Não foi possível carregar esta loja. Tente novamente.",
     "notFound": "Loja não encontrada."
+  },
+  "storeOrders": {
+    "title": "Pedidos recebidos",
+    "subtitle": "Aceite, recuse ou conclua os pedidos da loja",
+    "empty": "Ainda não há pedidos nesta loja.",
+    "loadError": "Não foi possível carregar os pedidos. Tente novamente.",
+    "updateError": "Não foi possível atualizar o status do pedido.",
+    "confirm": {
+      "acceptedTitle": "Aceitar pedido",
+      "acceptedMessage": "A loja vai aceitar este pedido.",
+      "rejectedTitle": "Recusar pedido",
+      "rejectedMessage": "A loja vai recusar este pedido.",
+      "completedTitle": "Concluir pedido",
+      "completedMessage": "Marcar este pedido como concluído.",
+      "cancelledTitle": "Cancelar pedido",
+      "cancelledMessage": "A loja vai cancelar este pedido."
+    }
   },
   "storePurchases": {
     "title": "Produtos comprados",
