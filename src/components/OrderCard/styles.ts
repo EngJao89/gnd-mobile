@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
   status: {
     fontSize: FontSize.xs,
     fontWeight: '700',
-    textTransform: 'uppercase',
     color: Colors.GRAY_500,
     flexShrink: 0,
   },
@@ -76,5 +75,36 @@ export const styles = StyleSheet.create({
     fontSize: FontSize.base,
     fontWeight: 'bold',
     color: Colors.GRAY_900,
+  },
+  actions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.two,
+    marginTop: Spacing.two,
+  },
+  actionButton: {
+    flexGrow: 1,
+    minWidth: 120,
+    borderWidth: 1.5,
+    borderColor: Colors.GREEN_700,
+    borderRadius: 8,
+    paddingVertical: Spacing.two,
+    paddingHorizontal: Spacing.three,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionButtonDanger: {
+    borderColor: Colors.RED_600,
+  },
+  actionButtonDisabled: {
+    opacity: 0.5,
+  },
+  actionLabel: {
+    fontSize: FontSize.sm,
+    fontWeight: '700',
+    color: Colors.GREEN_700,
+  },
+  actionLabelDanger: {
+    color: Colors.RED_600,
   },
 });

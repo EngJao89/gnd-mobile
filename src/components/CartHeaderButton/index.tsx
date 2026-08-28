@@ -12,7 +12,7 @@ export default function CartHeaderButton() {
   return (
     <Pressable
       style={styles.cartButton}
-      onPress={() => router.push(isStore ? '/store-purchases' : '/cart')}>
+      onPress={() => router.push(isStore ? '/store-orders' : '/cart')}>
       <Text style={styles.cartIcon}>{isStore ? '📦' : '🛒'}</Text>
     </Pressable>
   );

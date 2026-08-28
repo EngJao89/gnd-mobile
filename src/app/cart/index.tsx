@@ -72,7 +72,7 @@ export default function Cart() {
   }
 
   if (isReady && isStore) {
-    return <Redirect href="/store-purchases" />;
+    return <Redirect href="/store-orders" />;
   }
 
   return (

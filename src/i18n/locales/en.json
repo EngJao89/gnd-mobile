@@ -145,11 +145,22 @@
     "itemCount_other": "{{count}} items",
     "status": {
       "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
       "confirmed": "Confirmed",
       "completed": "Completed",
       "cancelled": "Cancelled",
       "canceled": "Cancelled"
-    }
+    },
+    "actions": {
+      "accept": "Accept",
+      "reject": "Reject",
+      "complete": "Complete",
+      "cancel": "Cancel"
+    },
+    "cancelTitle": "Cancel order",
+    "cancelMessage": "You can only cancel while the store has not responded yet.",
+    "cancelError": "Could not cancel this order. Please try again."
   },
   "userProfile": {
     "subtitle": "User profile",
@@ -166,6 +177,23 @@
     "emptyProducts": "This store has no products yet.",
     "loadError": "Could not load this store. Please try again.",
     "notFound": "Store not found."
+  },
+  "storeOrders": {
+    "title": "Incoming orders",
+    "subtitle": "Accept, reject or complete store orders",
+    "empty": "No orders in this store yet.",
+    "loadError": "Could not load orders. Please try again.",
+    "updateError": "Could not update the order status.",
+    "confirm": {
+      "acceptedTitle": "Accept order",
+      "acceptedMessage": "The store will accept this order.",
+      "rejectedTitle": "Reject order",
+      "rejectedMessage": "The store will reject this order.",
+      "completedTitle": "Complete order",
+      "completedMessage": "Mark this order as completed.",
+      "cancelledTitle": "Cancel order",
+      "cancelledMessage": "The store will cancel this order."
+    }
   },
   "storePurchases": {
     "title": "Purchased products",
