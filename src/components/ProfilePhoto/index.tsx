@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -53,13 +53,10 @@ function ProfilePhotoContent({
 
 export default function ProfilePhoto({ uri, name }: Readonly<ProfilePhotoProps>) {
   const { t } = useTranslation();
-  const [imageError, setImageError] = useState(false);
+  const imageKey = uri ?? '';
+  const [failedImageKey, setFailedImageKey] = useState<string | null>(null);
   const initials = getInitials(name);
-  const showImage = Boolean(uri) && !imageError;
-
-  useEffect(() => {
-    setImageError(false);
-  }, [uri]);
+  const showImage = Boolean(uri) && failedImageKey !== imageKey;
 
   return (
     <View
@@ -71,7 +68,7 @@ export default function ProfilePhoto({ uri, name }: Readonly<ProfilePhotoProps>)
           showImage={showImage}
           uri={uri}
           initials={initials}
-          onImageError={() => setImageError(true)}
+          onImageError={() => setFailedImageKey(imageKey)}
         />
       </View>
 
