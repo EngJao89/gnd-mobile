@@ -64,9 +64,10 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set());
 
+  const visibleItems = isUser ? items : [];
+
   const reload = useCallback(async () => {
     if (!isUser) {
-      setItems([]);
       return;
     }
 
@@ -82,17 +83,26 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   }, [isUser]);
 
   useEffect(() => {
-    if (!isReady) {
+    if (!isReady || !isUser) {
       return;
     }
 
-    if (!isUser) {
-      setItems([]);
-      return;
-    }
+    let cancelled = false;
 
-    void reload();
-  }, [isReady, isUser, reload]);
+    void getCart()
+      .then((cart) => {
+        if (!cancelled) {
+          setItems(cart.items);
+        }
+      })
+      .catch(() => {
+        // Keep the current items when GET /cart is not available yet.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isReady, isUser]);
 
   const addItem = useCallback(
     async (productId: string, quantity: number, product?: Product) => {
@@ -124,8 +134,9 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   );
 
   const getQuantity = useCallback(
-    (productId: string) => items.find((item) => item.productId === productId)?.quantity ?? 0,
-    [items],
+    (productId: string) =>
+      visibleItems.find((item) => item.productId === productId)?.quantity ?? 0,
+    [visibleItems],
   );
 
   const isUpdating = useCallback((productId: string) => pendingIds.has(productId), [pendingIds]);
@@ -144,7 +155,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const value = useMemo(
     () => ({
-      items,
+      items: visibleItems,
       isLoading,
       isCheckingOut,
       addItem,
@@ -153,7 +164,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
       isUpdating,
       reload,
     }),
-    [items, isLoading, isCheckingOut, addItem, checkout, getQuantity, isUpdating, reload],
+    [visibleItems, isLoading, isCheckingOut, addItem, checkout, getQuantity, isUpdating, reload],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
