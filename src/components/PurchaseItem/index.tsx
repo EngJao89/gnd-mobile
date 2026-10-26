@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -17,13 +17,11 @@ type PurchaseItemProps = {
 
 export default function PurchaseItem({ purchase }: Readonly<PurchaseItemProps>) {
   const { t } = useTranslation();
-  const [imageError, setImageError] = useState(false);
   const imageUri = getProductImageUrl(purchase.product.imageUrl);
+  const imageKey = `${purchase.id}:${purchase.product.imageUrl}`;
+  const [failedImageKey, setFailedImageKey] = useState<string | null>(null);
+  const imageError = failedImageKey === imageKey;
   const buyerName = getBuyerDisplayName(purchase.buyer);
-
-  useEffect(() => {
-    setImageError(false);
-  }, [purchase.id, purchase.product.imageUrl]);
 
   return (
     <View style={styles.container}>
@@ -37,7 +35,7 @@ export default function PurchaseItem({ purchase }: Readonly<PurchaseItemProps>) 
               source={{ uri: imageUri }}
               style={styles.image}
               contentFit="contain"
-              onError={() => setImageError(true)}
+              onError={() => setFailedImageKey(imageKey)}
             />
           )}
         </View>
