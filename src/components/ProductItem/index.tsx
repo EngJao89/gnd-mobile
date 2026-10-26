@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Alert, Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -23,14 +23,12 @@ export default function ProductItem({ product, showStoreName = true }: Readonly<
   const { isUser, isStore } = useAuth();
   const { addItem, getQuantity, isUpdating } = useCart();
   const [localQuantity, setLocalQuantity] = useState(0);
-  const [imageError, setImageError] = useState(false);
   const imageUri = getProductImageUrl(product.imageUrl);
+  const imageKey = `${product.id}:${product.imageUrl}`;
+  const [failedImageKey, setFailedImageKey] = useState<string | null>(null);
+  const imageError = failedImageKey === imageKey;
   const quantity = isUser ? getQuantity(product.id) : localQuantity;
   const updating = isUpdating(product.id);
-
-  useEffect(() => {
-    setImageError(false);
-  }, [product.id, product.imageUrl]);
 
   async function handleIncrement() {
     if (isStore) {
@@ -72,7 +70,7 @@ export default function ProductItem({ product, showStoreName = true }: Readonly<
               source={{ uri: imageUri }}
               style={styles.image}
               contentFit="contain"
-              onError={() => setImageError(true)}
+              onError={() => setFailedImageKey(imageKey)}
             />
           )}
         </View>
